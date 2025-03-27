@@ -1,0 +1,10 @@
+uploads
+node_modules
+upgrade
+upgrade-temp-backup
+/index.php
+ai1wm-backups
+/themes/index.php
+/plugins/index.php
+.idea
+languages

@@ -1,0 +1,27 @@
+{
+  "name": "qualcomwstheme",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "build": "wp-scripts build",
+    "start": "wp-scripts start",
+    "dev": "wp-scripts start",
+    "tailBuild": "tailwindcss -i ./src/index.css -o ./build/index.css --minify",
+    "tailDev": "tailwindcss -i ./src/index.css -o ./build/index.css --watch --minify",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@tailwindcss/typography": "^0.5.16",
+    "@wordpress/scripts": "^30.13.0",
+    "prettier": "^3.5.2",
+    "prettier-plugin-tailwindcss": "^0.6.11",
+    "tailwindcss": "^3.4.17"
+  },
+  "dependencies": {
+    "axios": "^1.8.4"
+  }
+}

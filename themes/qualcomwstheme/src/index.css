@@ -1,0 +1,102 @@
+@import url("https://fonts.googleapis.com/css2?family=Alegreya+Sans:ital,wght@0,100;0,300;0,400;0,500;0,700;0,800;0,900;1,100;1,300;1,400;1,500;1,700;1,800;1,900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Rajdhani:wght@300;400;500;600;700&display=swap");
+@import url("scroller.css");
+@import url("search-overlay.css");
+
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+html {
+    @apply bg-mid_blue;
+}
+
+body {
+    @apply mx-auto text-sm md:text-base;
+}
+
+h1 {
+    @apply font-rajdhani text-4xl font-light capitalize md:text-5xl lg:text-6xl;
+}
+
+h2,
+h3 {
+    @apply font-rajdhani;
+}
+
+h4 {
+    @apply font-open_sans;
+}
+
+p {
+    @apply font-inter text-base font-light md:text-lg;
+}
+
+.text-shadow {
+    @apply [text-shadow:1px_1px_6px_#2d2d34];
+}
+
+.nav-link {
+    @apply font-alegraya_sans text-sm font-medium text-slate-200 duration-300 md:text-base lg:text-mid_blue xl:text-lg;
+}
+
+.nav-link:hover,
+.active {
+    @apply text-primary_yellow;
+}
+
+.nav-link-footer:hover {
+    @apply text-primary_yellow duration-300;
+}
+
+.btn {
+    @apply rounded-full border border-primary_yellow bg-primary_yellow px-4 py-2 font-inter text-sm font-light text-white duration-300 md:text-base;
+}
+
+.btn-nf {
+    @apply rounded-full border border-primary_yellow px-4 py-2 font-inter text-sm font-light text-primary_yellow duration-300 md:text-base;
+}
+
+.btn-nf:hover {
+    @apply rounded-full border border-primary_yellow bg-primary_yellow px-4 py-2 font-inter text-sm font-light text-white duration-300 md:text-base;
+}
+
+.btn:hover {
+    @apply border border-primary_yellow bg-transparent font-semibold text-yellow-500;
+}
+
+.hero__links li a {
+    @apply font-alegraya_sans text-white;
+}
+
+.hero__links li a:hover {
+    @apply font-alegraya_sans text-primary_yellow;
+}
+
+/*----------------------*/
+.tag-list li {
+    padding: 1rem;
+    background-color: black;
+    border-radius: 0.5rem;
+    box-shadow: 0.1rem 0.25rem 1rem rgba(255, 0, 0, 0.605);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

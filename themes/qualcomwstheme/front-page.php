@@ -22,7 +22,7 @@
                     class="container flex h-full flex-col items-center justify-center gap-8 text-center lg:items-start lg:text-left 2xl:px-16"
             >
                 <h1 class="max-w-4xl text-shadow-md">
-                    Innovación tecnológica para empresas que exigen excelencia
+                    Innovación tecnológica para empresas que exigen excelencia!!!
                 </h1>
                 <p class="text-shadow-md">
                     Desde equipos de gama alta hasta impresoras, ofrecemos equipos y

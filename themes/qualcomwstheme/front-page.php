@@ -22,9 +22,7 @@
                     class="container flex h-full flex-col items-center justify-center gap-8 text-center lg:items-start lg:text-left 2xl:px-16"
             >
                 <h1 class="max-w-4xl text-shadow-md">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet asperiores assumenda blanditiis
-                    cumque et facilis itaque modi nemo omnis optio qui quos sapiente, suscipit ut vitae. Assumenda cum
-                    facere praesentium.
+                    Merga
                 </h1>
                 <p class="text-shadow-md">
                     Desde equipos de gama alta hasta impresoras, ofrecemos equipos y

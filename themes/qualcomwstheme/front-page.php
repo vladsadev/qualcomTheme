@@ -16,13 +16,13 @@
             </ul>
         </div>
         <!-- portada -->
-        <div class="h-[70vh] bg-cover lg:h-[75vh]"
-             style="background-image: url(<?= get_theme_file_uri('src/assets/images/hero-img.png') ?>)">
+        <div class="h-[70vh] bg-cover lg:h-[75vh] pt-12 md:pt-24"
+             style="background-image: url(<?= get_theme_file_uri('src/assets/images/bg-hero.png') ?>)">
             <div
                     class="container flex h-full flex-col items-center justify-center gap-8 text-center lg:items-start lg:text-left 2xl:px-16"
             >
                 <h1 class="max-w-4xl text-shadow-md">
-                    Innovación Tecnológica para Empresas que Exigen Excelencia
+                    Innovación Tecnológica para Empresas que Exigen Excelencia.
                 </h1>
                 <p class="text-shadow-md">
                     Desde equipos de gama alta hasta impresoras, ofrecemos equipos y
@@ -54,17 +54,14 @@
                         accesorios y suministros que necesitan, todo con la elegancia y
                         profesionalismo que nos define.
                     </p>
-                    <div class="space-x-4">
-                        <a class="btn" href="<?= site_url('productos'); ?>">Ver Productos</a>
-                        <!--                        <a class="btn" href="">Regístrate</a>-->
-                    </div>
                 </div>
             </div>
         </div>
     </section>
 
     <!--~~~~~~~~~~~~~~~SOLUCIONES ~~~~~~~~~~~~~~~-->
-    <section id="soluciones" class="bg-pcb bg-repeat bg-repeat-y py-10 text-slate-200">
+    <section id="soluciones" class="bg-repeat py-10 text-slate-200" style="background-image:
+            url(<?= get_theme_file_uri('src/assets/images/bg-pcb.png') ?>)">
         <h2
                 class="py-3 text-center font-rajdhani text-2xl font-bold lg:text-4xl"
         >
@@ -73,7 +70,8 @@
         <div class="container space-y-4 lg:space-y-5">
             <!-- First Tile -->
             <div
-                    class="flex h-[21rem] flex-col items-center justify-center gap-4 bg-solution_1 bg-cover bg-top py-10 text-center lg:h-[24rem] lg:justify-start 2xl:h-[29rem]"
+                    class="flex h-[21rem] flex-col items-center justify-center gap-4 bg-cover bg-top py-10 text-center lg:h-[24rem] lg:justify-start 2xl:h-[29rem]"
+                    style="background-image: url(<?= get_theme_file_uri('src/assets/images/bg-venta.png')?>)"
             >
                 <p
                         class="text-shadow max-w-xl font-rajdhani text-4xl font-bold lg:text-5xl"
@@ -94,12 +92,14 @@
             >
                 <!-- second tile -->
                 <div
-                        class="flex h-[21rem] flex-col items-center justify-center gap-4 bg-solution_2 bg-cover bg-top py-10 lg:h-[25rem] lg:w-full lg:items-start lg:justify-end lg:p-8 2xl:h-[30rem]"
+                        class="flex h-[21rem] flex-col items-center justify-center gap-4 bg-cover bg-top py-10 lg:h-[25rem] lg:w-full lg:items-start lg:justify-end lg:p-8 2xl:h-[30rem]"
+                        style="background-image: url(<?= get_theme_file_uri('src/assets/images/bg-mantenimiento.png')
+                        ?>)"
                 >
                     <p
                             class="text-shadow font-rajdhani text-3xl font-bold lg:max-w-md lg:text-3xl"
                     >
-                        Venta de equipos informáticos y accesorios
+                        Servicio de mantenimiento y repación de equipos
                     </p>
                     <p class="text-shadow lg:max-w-md">
                         Ofrecemos una amplia selección de equipos informáticos de última
@@ -111,12 +111,13 @@
 
                 <!-- third tile -->
                 <div
-                        class="flex h-[21rem] flex-col items-center justify-center gap-4 bg-solution_3 bg-cover bg-top py-10 lg:h-[25rem] lg:w-full lg:items-start lg:justify-end lg:p-8 2xl:h-[30rem]"
+                        class="flex h-[21rem] flex-col items-center justify-center gap-4 bg-cover bg-top py-10 lg:h-[25rem] lg:w-full lg:items-start lg:justify-end lg:p-8 2xl:h-[30rem]"
+                        style="background-image: url(<?= get_theme_file_uri('src/assets/images/bg-soporte.png')?>)"
                 >
                     <p
                             class="text-shadow font-rajdhani text-3xl font-bold lg:max-w-md lg:text-3xl"
                     >
-                        Venta de equipos informáticos y accesorios
+                        Asesoramiento y Soporte técnico profesional
                     </p>
                     <p class="text-shadow lg:max-w-md">
                         Ofrecemos una amplia selección de equipos informáticos de última

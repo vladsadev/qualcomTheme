@@ -1,21 +1,5 @@
 <?php
 function qualcom_post_types(){
-//post-type 'eventos' prueba
-register_post_type( 'evento', array(
-  'public' => true,
-  'has_archive' => true,
-  'show_in_rest' => true,
-  'supports' => ['title','editor','excerpt'],
-  'rewrite' => array('slug' => 'eventos' ),
-  'labels' =>[ 
-    'name' => 'Eventos',
-    'add_new_item' => 'Añadir nuevo evento',
-    'edit_item' => 'Editar Evento',
-    'all_items' => 'Todos los Eventos',
-    'singular-name' => 'Evento'
-  ],
-  'menu_icon' => 'dashicons-calendar-alt',
-) );
 
 // POST-TYPE para las "marcas" en el front-page
   register_post_type( 'brand', array(
@@ -48,17 +32,5 @@ register_post_type( 'evento', array(
   ) );
   // POST-TYPE de prueba "profesores"
 
-  register_post_type( 'profesor', array(
-    'public' => true,
-    'supports' => ['title','editor','thumbnail'],
-    'labels' =>[ 
-      'name' => 'Profesores',
-      'add_new_item' => 'Añadir nuevo Profesor',
-      'edit_item' => 'Editar Profesor',
-      'all_items' => 'Todos los Profesores',
-      'singular_name' => 'Profesor'
-    ],
-    'menu_icon' => 'dashicons-welcome-learn-more',
-  ) );
   }
 add_action('init','qualcom_post_types');

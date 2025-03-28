@@ -3,7 +3,7 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
-function dd( $array ): void {
+function mdd( $array ): void {
 	echo '<pre>';
 	var_dump( $array );
 	echo '</pre>';

@@ -2,7 +2,7 @@
 
 <main class="">
     <!--~~~~~~~~~~~~~~~ HOME ~~~~~~~~~~~~~~~-->
-    <section id="home" class="pt-16 text-slate-200 md:pt-32">
+    <section id="home" class="pt-16 text-slate-200 md:pt-28">
         <!-- links hero container -->
         <div class="md:container hidden">
             <ul

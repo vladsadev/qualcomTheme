@@ -4,7 +4,7 @@
     <!--~~~~~~~~~~~~~~~ HOME ~~~~~~~~~~~~~~~-->
     <section id="home" class="pt-16 text-slate-200 md:pt-32">
         <!-- links hero container -->
-        <div class="md:container">
+        <div class="md:container hidden">
             <ul
                     class="hero__links grid grid-cols-3 justify-items-center gap-2 py-2 md:flex md:h-12 md:items-center md:justify-center md:gap-6"
             >
@@ -22,11 +22,10 @@
                     class="container flex h-full flex-col items-center justify-center gap-8 text-center lg:items-start lg:text-left 2xl:px-16"
             >
                 <h1 class="max-w-4xl text-shadow-md">
-                    Este es el nuevo título del sitio web
+                    Innovación Tecnológica para Empresas que Exigen Excelencia
                 </h1>
                 <p class="text-shadow-md">
                     Desde equipos de gama alta hasta impresoras, ofrecemos equipos y
-                    ok
                     servicios de alta calidad.
                 </p>
                 <a class="btn" href="<?= site_url('servicios') ?>">Ver Más</a>

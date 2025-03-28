@@ -8,11 +8,11 @@
             <ul
                     class="hero__links grid grid-cols-3 justify-items-center gap-2 py-2 md:flex md:h-12 md:items-center md:justify-center md:gap-6"
             >
-                <li><a href="#">Más vendidos</a></li>
-                <li><a href="#"> Ofertas</a></li>
-                <li><a href="#">Computación</a></li>
+                <li><a href="#">Más vendidos v2</a></li>
+                <li><a href="#"> Ofertas v2</a></li>
+                <li><a href="#">Computación v2</a></li>
                 <li><a href="#">Insumos</a></li>
-                <li><a href="#">Cables y Periféricos</a></li>
+                <li><a href="#">Cables y Periféricos v2</a></li>
             </ul>
         </div>
         <!-- portada -->
@@ -22,7 +22,7 @@
                     class="container flex h-full flex-col items-center justify-center gap-8 text-center lg:items-start lg:text-left 2xl:px-16"
             >
                 <h1 class="max-w-4xl text-shadow-md">
-                    Merga
+                    Este es el nuevo título del sitio web
                 </h1>
                 <p class="text-shadow-md">
                     Desde equipos de gama alta hasta impresoras, ofrecemos equipos y
@@ -40,7 +40,7 @@
             >
                 <div class="text-center md:w-1/2 md:text-left">
                     <p class="font-rajdhani text-3xl md:text-4xl lg:text-5xl">
-                        ¡Encuentra los mejores productos de tecnología!
+                        ¡Encuentra los mejores productos de tecnología! ESTA ES OTRA MODIFICACION
                     </p>
                 </div>
                 <div class="space-y-5 px-4 text-center md:w-1/2 md:text-left">

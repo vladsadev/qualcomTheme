@@ -25,7 +25,8 @@ function qualcom_estilos_propios_wp()
 
 add_action('after_setup_theme', 'qualcom_estilos_propios_wp');
 
-function agregar_estilos_wp()
+
+function agregar_estilos_wp() // Agregamos estilos para mantener el formato de edición en las publicaciones
 {
     wp_enqueue_style('wp-block-library'); // Carga los estilos por defecto de WordPress
     wp_enqueue_style('wp-block-library-theme'); // Estilos adicionales de los bloques
@@ -33,4 +34,24 @@ function agregar_estilos_wp()
 
 add_action('wp_enqueue_scripts', 'agregar_estilos_wp');
 
+// # agregamos la plantilla reutilizable
 require_once get_template_directory() . '/inc/banner.php';
+
+// Personalizamos el login
+add_filter('login_headerurl', 'ourHeaderUrl');
+function ourHeaderUrl()
+{
+    return esc_url(site_url('/'));
+}
+
+add_action('login_enqueue_scripts', 'ourLoginCSS');
+function ourLoginCSS()
+{
+    wp_enqueue_style('ourmaincss', get_theme_file_uri('/build/index.css'));
+}
+
+add_filter('login_headertitle', 'ourHeaderTitle');
+function ourHeaderTitle()
+{
+    return get_bloginfo('name');
+}

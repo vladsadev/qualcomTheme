@@ -2,11 +2,11 @@
 <!DOCTYPE html>
 <html <?php language_attributes(); ?>>
 <head>
-    <meta charset="<?php bloginfo( 'charset' ); ?>">
+    <meta charset="<?php bloginfo('charset'); ?>">
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-	<?php wp_head(); ?>
+    <?php wp_head(); ?>
 
 </head>
 <body class="flex absolute w-full h-screen flex-col <?php body_class(); ?>">
@@ -20,10 +20,10 @@
             <i id="hamburger-icon" class="ri-menu-4-line"></i>
         </div>
         <!-- Logo -->
-        <a class="cursor-pointer" href="<?= site_url( '/' ) ?>">
+        <a class="cursor-pointer" href="<?= site_url('/') ?>">
             <img
                     class="w-28 md:mr-6 md:w-40"
-                    src="<?= get_theme_file_uri( 'src/assets/images/logo.png' ) ?>"
+                    src="<?= get_theme_file_uri('src/assets/images/logo.png') ?>"
                     alt="Main Logo"
             />
         </a>
@@ -37,29 +37,29 @@
                     class="flex flex-col items-start gap-8 pt-24 lg:flex-row lg:items-end lg:pt-0"
             >
                 <li <?= is_front_page() ? 'class=active' : 'class=nav-link' ?>>
-                    <a href="<?= site_url( '/' ); ?>"
+                    <a href="<?= site_url('/'); ?>"
                     >Inicio <i class="ri-arrow-down-s-line"></i>
                     </a>
                 </li>
-                <li <?= is_page( 'sobre-nosotros' ) ? 'class=active' : 'class=nav-link' ?>>
+                <li <?= is_page('sobre-nosotros') ? 'class=active' : 'class=nav-link' ?>>
                     <a
-                            href="<?= site_url( '/sobre-nosotros' ) ?>"
+                            href="<?= site_url('/sobre-nosotros') ?>"
                     >Sobre<br>Nosotros<i class="ri-arrow-down-s-line"></i
                         ></a>
                 </li>
-                <li <?= is_page( 'servicios' ) ? 'class=active' : 'class=nav-link' ?>>
+                <li <?= is_page('servicios') ? 'class=active' : 'class=nav-link' ?>>
 
-                    <a href="<?= site_url( '/servicios' ) ?>"
+                    <a href="<?= site_url('/servicios') ?>"
                     >Servicios/<br/>Productos<i class="ri-arrow-down-s-line"></i
                         ></a>
                 </li>
-                <li <?= ( get_post_type() === 'post' ) ? 'class=active' : 'class=nav-link' ?>>
-                    <a href=<?= site_url( '/blog' ) ?>
+                <li <?= (get_post_type() === 'post') ? 'class=active' : 'class=nav-link' ?>>
+                    <a href=<?= site_url('/blog') ?>
                     >Blogs/<br/>Noticias<i class="ri-arrow-down-s-line"></i
                         ></a>
                 </li>
-                <li <?= is_page( 'contacto' ) ? 'class=active' : 'class=nav-link' ?>>
-                    <a href=<?= site_url( 'contacto' ) ?>
+                <li <?= is_page('contacto') ? 'class=active' : 'class=nav-link' ?>>
+                    <a href=<?= site_url('contacto') ?>
                     >Contacto<i class="ri-arrow-down-s-line"></i
                         ></a>
                 </li>
@@ -73,19 +73,20 @@
 
             <!-- Top right icons for MOBILE version:search-icon, register and sign in -->
             <div class="flex cursor-pointer items-center gap-5 pt-20 lg:hidden">
-                <a class="nav-link" href="#">Registrarse</a>
-                <a class="nav-link" href="#">Iniciar Sesión</a>
+                <a class="nav-link" href="<?= esc_url(site_url('/wp-signup.php')) ?>">Registrarse</a>
+                <a class="nav-link" href="<?= esc_url(wp_login_url()) ?>">Iniciar Sesión</a>
             </div>
         </div>
         <!-- Top right icons DESKTOP: search-icon, Sign in and login -->
         <div
                 class="flex cursor-pointer items-center gap-5 text-xl sm:text-2xl lg:self-center"
         >
-<!--            <span class="search-trigger js-search-trigger"><i class="fa fa-search" aria-hidden="true"></i></span>-->
+            <!--            <span class="search-trigger js-search-trigger"><i class="fa fa-search" aria-hidden="true"></i></span>-->
 
             <i class="ri-search-line js-search-trigger hover:text-primary_yellow"></i>
-            <!--            <a class="nav-link hidden lg:block" href="#">Registrarse</a>-->
-            <a class="nav-link hidden lg:block" href="<?php echo site_url( 'wp-admin' ); ?>">Iniciar Sesión</a>
+            <!--            <a class="nav-link hidden lg:block" href="--><?php //= esc_url(site_url('/wp-signup.php'))
+            //            ?><!--">Registrarse</a>-->
+            <a class="nav-link hidden lg:block" href="<?= esc_url(wp_login_url()) ?>">Iniciar Sesión</a>
         </div>
     </nav>
 </header>

@@ -4,7 +4,7 @@ Tags: contact form, contact forms, wp forms, forms, form builder, contact form b
 Requires at least: 4.5
 Tested up to: 6.7
 Requires PHP: 7.4
-Stable tag: 6.0.0
+Stable tag: 6.0.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -361,6 +361,10 @@ The entire source code is <a href="https://github.com/fluentform/fluentform">ava
 12. Asset Loading Comparison with Other Plugins
 
 == Changelog ==
+
+= 6.0.1 (Date: March 27, 2025) =
+- Fix webhook settings validation issue
+- Update contacts in constant contact v3
 
 = 6.0.0 (Date: March 19, 2025) =
 - Adds Save & Resume button for conversational form

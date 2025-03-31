@@ -1,8 +1,8 @@
 <?php get_header();
+
 banner();
 ?>
 <main>
-
     <?php while (have_posts()):
         the_post(); ?>
         <!--~~~~~~~~~~~~~~~ VISITANOS ~~~~~~~~~~~~~~~-->
@@ -34,7 +34,7 @@ banner();
                 >
                     <img
                             class="w-full object-fit"
-                            src="<?= get_theme_file_uri('src/assets/images/empresa.jpg')?>"
+                            src="<?= get_theme_file_uri('src/assets/images/empresa.jpg') ?>"
                             alt=""
                     />
                 </div>

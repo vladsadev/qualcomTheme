@@ -1,15 +1,9 @@
 <?php get_header();
 
-banner(
-//recuperamos la imagen que sube el usuario y pasamos la misma a la funcion
-// banner
-	[
-		'image' => get_field( 'imagen_del_banner' ),
-	]
-); ?>
+banner(); ?>
 
     <main class="bg-white text-black">
-		<?php while ( have_posts() ): the_post(); ?>
+        <?php while (have_posts()): the_post(); ?>
             <!--        Quienes somos-->
             <section id="quienes-somos" class="pt-8">
                 <div
@@ -20,19 +14,14 @@ banner(
                         <h2 class="text-4xl font-bold">¿Quienes somos?</h2>
                         <div class="w-16 border border-b-2 border-primary_yellow"></div>
                         <p class="mt-4 text-justify">
-                            Somos Qualcom, un equipo apasionado por la tecnología y
-                            comprometido con ofrecer soluciones tecnológicas de alta calidad a
-                            empresas que buscan la excelencia. Con más de 20 años de
-                            experiencia en el mercado, nos especializamos en ofrecer una
-                            amplia gama de equipos de computación, accesorios, y servicios
-                            técnicos adaptados a las necesidades de nuestros clientes.
+                          <?= get_field('quienes_somos')?>
                         </p>
                     </div>
                     <!-- imagen -->
                     <div class="grid justify-items-center md:w-1/2 lg:p-5">
                         <img
                                 class="w-11/12 object-cover lg:w-3/4"
-                                src="<?= get_theme_file_uri( 'src/assets/images/empresa.jpg' ) ?>"
+                                src="<?= get_theme_file_uri('src/assets/images/empresa.jpg') ?>"
                                 alt=""
                         />
                     </div>
@@ -45,12 +34,7 @@ banner(
                         Nuestra experiencia nos respalda
                     </h3>
                     <p class="text-justify">
-                        Fundada en [Año de Fundación], Qualcom comenzó como un pequeño
-                        proveedor de equipos informáticos, y rápidamente creció gracias a su
-                        enfoque en la calidad y el servicio al cliente. A lo largo de los
-                        años, hemos expandido nuestras operaciones para ofrecer una gama
-                        completa de soluciones tecnológicas, desde equipos de computación
-                        hasta servicios técnicos especializados
+                        <?= get_field('nuestra_experiencia')?>
                     </p>
                 </div>
                 <!-- nuestros valores -->
@@ -62,19 +46,14 @@ banner(
                         <h2 class="text-4xl font-bold">Nuestros valores</h2>
                         <div class="w-16 border border-b-2 border-primary_yellow"></div>
                         <p class="mt-4 text-justify">
-                            Somos Qualcom, un equipo apasionado por la tecnología y
-                            comprometido con ofrecer soluciones tecnológicas de alta calidad a
-                            empresas que buscan la excelencia. Con más de 20 años de
-                            experiencia en el mercado, nos especializamos en ofrecer una
-                            amplia gama de equipos de computación, accesorios, y servicios
-                            técnicos adaptados a las necesidades de nuestros clientes.
+                            <?= get_field('nuestros_valores')?>
                         </p>
                     </div>
                     <!-- imagen -->
                     <div class="grid justify-items-center md:w-1/2 lg:p-5">
                         <img
                                 class="w-11/12 object-cover lg:w-3/4"
-                                src="<?= get_theme_file_uri( 'src/assets/images/objetivos.jpg' ) ?>"
+                                src="<?= get_theme_file_uri('src/assets/images/objetivos.jpg') ?>"
                                 alt=""
                         />
                     </div>
@@ -158,10 +137,12 @@ banner(
             </section>
 
             <!-- Testimonios -->
-            <section class="bg-pcb py-4 md:py-14 mt-4 md:mt-10">
-				<?php get_template_part( 'template-parts/content-testimonios',) ?>
+            <section class="bg-repeat py-4 md:py-14 mt-4 md:mt-10"
+                     style="background-image: url(<?= get_theme_file_uri('src/assets/images/bg-pcb.png') ?>)">
+
+                <?php get_template_part('template-parts/content-testimonios') ?>
             </section>
 
-		<?php endwhile ?>
+        <?php endwhile ?>
     </main>
 <?php get_footer() ?>

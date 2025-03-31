@@ -111,7 +111,7 @@ class Client extends IntegrationManagerHelper
         	$errors['headers']['required'] = __('Header name is required', 'fluentformpro');
         }
         
-        $errors = apply_filters('fluentform/webhook_notification_validation_errors', $notification, $errors);
+        $errors = apply_filters('fluentform/webhook_notification_validation_errors', $errors, $notification);
         if ($errors) {
             wp_send_json_error(array(
                 'errors'  => $errors,

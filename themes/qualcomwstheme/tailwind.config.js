@@ -36,18 +36,8 @@ module.exports = {
                 // hero: "url('assets/images/hero-img.png')",
                 hero: "url('/wp-content/themes/qualcomwstheme/src/assets/images/hero-img.png')",
                 // pepe: "url('/wp-content/themes/temptheme/src/assets/images/hero-img.png')",
-
                 // logo: "url('assets/images/library-hero.png')",
                 logo_dark: "url('/wp-content/themes/qualcomwstheme/src/assets/images/logo_dark.svg')",
-                pcb: "url('/wp-content/themes/temptheme/src/assets/images/bg-pcb.png')",
-                solution_1: "url('/wp-content/themes/temptheme/src/assets/images/bg-soluciones-1.png')",
-                solution_2: "url('/wp-content/themes/temptheme/src/assets/images/bg-soluciones-2.png')",
-                solution_3: "url('/wp-content/themes/temptheme/src/assets/images/bg-soluciones-3.png')",
-                contact_bg: "url('/wp-content/themes/temptheme/src/assets/images/contact-bg.jpg')",
-                bg_keyboard: "url('/wp-content/themes/temptheme/src/assets/images/laptop-gamer.jpg')",
-                game_laptop: "url('/wp-content/themes/temptheme/src/assets/images/game-laptop.jpg')",
-                hp_laptop: "url('/wp-content/themes/temptheme/src/assets/images/hp_15.png')",
-                contacto_bg: "url('/wp-content/themes/temptheme/src/assets/images/contacto.jpg')",
             },
         },
         container: {

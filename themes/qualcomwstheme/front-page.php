@@ -17,16 +17,15 @@
         </div>
         <!-- portada -->
         <div class="h-[70vh] bg-cover lg:h-[75vh] pt-12 md:pt-24"
-             style="background-image: url(<?= get_theme_file_uri('src/assets/images/bg-hero.png') ?>)">
+             style="background-image: url(<?= get_theme_file_uri('src/assets/images/bg-hero-portada.jpg') ?>)">
             <div
                     class="container flex h-full flex-col items-center justify-center gap-8 text-center lg:items-start lg:text-left 2xl:px-16"
             >
                 <h1 class="max-w-4xl text-shadow-md">
-                    Innovación Tecnológica para Empresas que Exigen Excelencia.
+                    <?= get_field('titulo_portada_principal') ?>
                 </h1>
-                <p class="text-shadow-md">
-                    Desde equipos de gama alta hasta impresoras, ofrecemos equipos y
-                    servicios de alta calidad.
+                <p class="text-shadow-md text-xl">
+                    <?= get_field('subtitulo_portada_principal')?>
                 </p>
                 <a class="btn" href="<?= site_url('servicios') ?>">Ver Más</a>
             </div>
@@ -38,21 +37,13 @@
                     class="container flex flex-col gap-4 md:flex-row md:items-center"
             >
                 <div class="text-center md:w-1/2 md:text-left">
-                    <p class="font-rajdhani text-3xl md:text-4xl lg:text-5xl">
-                        ¡Encuentra los mejores productos de tecnología! ESTA ES OTRA MODIFICACION
-                    </p>
+                    <h2 class="font-rajdhani text-3xl md:text-4xl lg:text-5xl">
+                        ¡Encuentra los mejores productos de tecnología!
+                    </h2>
                 </div>
                 <div class="space-y-5 px-4 text-center md:w-1/2 md:text-left">
                     <p class="pb-2">
-                        En nuestra tienda online, ofrecemos una amplia selección de
-                        equipos informáticos, servidores de red, impresoras,
-                        proyectores, escáneres, sistemas UPS, tablets, televisores,
-                        suministros (toner e tinta), así como servicios técnicos y
-                        accesorios. Nos destacamos por brindar un servicio serio y
-                        formal manteniendo un enfoque amigable. Nuestro objetivo es
-                        suministrar a las empresas privadas los equipos informáticos,
-                        accesorios y suministros que necesitan, todo con la elegancia y
-                        profesionalismo que nos define.
+                        <?= get_field('descripcion_productos') ?>
                     </p>
                 </div>
             </div>
@@ -71,7 +62,7 @@
             <!-- First Tile -->
             <div
                     class="flex h-[21rem] flex-col items-center justify-center gap-4 bg-cover bg-top py-10 text-center lg:h-[24rem] lg:justify-start 2xl:h-[29rem]"
-                    style="background-image: url(<?= get_theme_file_uri('src/assets/images/bg-venta.png')?>)"
+                    style="background-image: url(<?= get_theme_file_uri('src/assets/images/bg-venta.png') ?>)"
             >
                 <p
                         class="text-shadow max-w-xl font-rajdhani text-4xl font-bold lg:text-5xl"
@@ -79,9 +70,7 @@
                     Venta de equipos informáticos y accesorios
                 </p>
                 <p class="text-shadow max-w-2xl lg:text-lg">
-                    Ofrecemos una amplia selección de equipos informáticos de última
-                    generación y accesorios de alta calidad para satisfacer todas tus
-                    necesidades tecnológicas.
+                    <?= get_field('descripcion_venta_de_equipos') ?>
                 </p>
                 <a class="btn" href="<?= site_url('servicios') ?>">Conocer más</a>
             </div>
@@ -102,9 +91,7 @@
                         Servicio de mantenimiento y repación de equipos
                     </p>
                     <p class="text-shadow lg:max-w-md">
-                        Ofrecemos una amplia selección de equipos informáticos de última
-                        generación y accesorios de alta calidad para satisfacer todas
-                        tus necesidades tecnológicas.
+                        <?= get_field('descripcion_mantenimiento_y_reparacion') ?>
                     </p>
                     <a class="btn" href="#">Conocer más</a>
                 </div>
@@ -112,7 +99,7 @@
                 <!-- third tile -->
                 <div
                         class="flex h-[21rem] flex-col items-center justify-center gap-4 bg-cover bg-top py-10 lg:h-[25rem] lg:w-full lg:items-start lg:justify-end lg:p-8 2xl:h-[30rem]"
-                        style="background-image: url(<?= get_theme_file_uri('src/assets/images/bg-soporte.png')?>)"
+                        style="background-image: url(<?= get_theme_file_uri('src/assets/images/bg-soporte.png') ?>)"
                 >
                     <p
                             class="text-shadow font-rajdhani text-3xl font-bold lg:max-w-md lg:text-3xl"
@@ -120,9 +107,7 @@
                         Asesoramiento y Soporte técnico profesional
                     </p>
                     <p class="text-shadow lg:max-w-md">
-                        Ofrecemos una amplia selección de equipos informáticos de última
-                        generación y accesorios de alta calidad para satisfacer todas
-                        tus necesidades tecnológicas.
+                        <?= get_field('descripcion_soporte_tecnico') ?>
                     </p>
                     <a class="btn" href="#">Conocer más</a>
                 </div>

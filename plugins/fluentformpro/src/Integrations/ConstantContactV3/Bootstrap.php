@@ -455,6 +455,14 @@ class Bootstrap extends IntegrationManagerController
                 ],
                 [
                     'require_list'   => true,
+                    'key'            => 'update_if_exist',
+                    'label'          => __('Update Contact', 'fluentformpro'),
+                    'component'      => 'checkbox-single',
+                    'tips'           => __('Checking this will also support multiple list subscription', 'fluentformpro'),
+                    'checkbox_label' => __('Update the contact if exists', 'fluentformpro')
+                ],
+                [
+                    'require_list'   => true,
                     'key'            => 'enabled',
                     'label'          => __('Status', 'fluentformpro'),
                     'component'      => 'checkbox-single',
@@ -546,6 +554,7 @@ class Bootstrap extends IntegrationManagerController
     {
         $feedData = $feed['processedValues'];
         $feedData['email_address'] = ArrayHelper::get($formData, $feedData['email_address']);
+        $updateIfExist = ArrayHelper::get($feedData, 'update_if_exist', 0) == 1;
 
         if (!is_email($feedData['email_address']) || !$feedData['list_id']) {
             do_action('fluentform/integration_action_result', $feed, 'failed',
@@ -598,14 +607,20 @@ class Bootstrap extends IntegrationManagerController
                 continue;
             }
 
-            if ($fieldName === 'email_address') {
-                $subscriber['email_address'] = [
-                    'address' => $fieldValue,
-                ];
-            }
+            if ($updateIfExist) {
+                if ($fieldName === 'email_address') {
+                    $subscriber['email_address'] = $fieldValue;
+                }
+            } else {
+                if ($fieldName === 'email_address') {
+                    $subscriber['email_address'] = [
+                        'address' => $fieldValue,
+                    ];
+                }
 
-            if ($fieldName === 'permission_to_send') {
-                $subscriber['email_address']['permission_to_send'] = $fieldValue;
+                if ($fieldName === 'permission_to_send') {
+                    $subscriber['email_address']['permission_to_send'] = $fieldValue;
+                }
             }
 
             if ($fieldName === 'birthday_month') {
@@ -693,7 +708,13 @@ class Bootstrap extends IntegrationManagerController
 
         $subscriber = \json_encode($subscriber);
         $client = $this->getRemoteClient();
-        $results = $client->makeRequest('/contacts', $subscriber, 'POST');
+        
+        $endPoint = '/contacts';
+        if ($updateIfExist) {
+            $endPoint .= '/sign_up_form';
+        }
+        
+        $results = $client->makeRequest($endPoint, $subscriber, 'POST');
 
         if (is_wp_error($results)) {
             do_action('fluentform/integration_action_result', $feed, 'failed',

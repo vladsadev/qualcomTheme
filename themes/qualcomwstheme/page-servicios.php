@@ -1,12 +1,6 @@
 <?php get_header() ?>
 <!-- Banner -->
-
-<?php banner(
-    [
-        'image' => get_field('imagen_del_banner'),
-    ]
-); ?>
-
+<?php banner(); ?>
 
 <main class="bg-white text-black">
     <?php while (have_posts()): the_post(); ?>

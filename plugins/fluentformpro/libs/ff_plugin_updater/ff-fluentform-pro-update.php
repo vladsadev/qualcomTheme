@@ -39,9 +39,9 @@ new FluentFormAddOnChecker(array(
     // If using add_menu_page, this is the parent slug to add a submenu item underneath.
     'activate_url'    => admin_url('admin.php?page=fluent_forms_settings&component=license_page'),
     // The translatable title of the plugin
-    'plugin_title'    => __('Fluent Forms Pro Add On', 'fluentformpro'),
+    'plugin_title'    => 'Fluent Forms Pro Add On',
     'menu_slug'       => 'fluentform-pro-add-on',
-    'menu_title'      => __('Fluent Forms Pro License', 'fluentformpro'),
+    'menu_title'      => 'Fluent Forms Pro License',
     'cache_time'      => 168 * 60 * 60 // 7 days
 ));
 

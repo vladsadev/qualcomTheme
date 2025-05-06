@@ -40,7 +40,8 @@ class InventoryController
         }
         add_filter('fluentform/global_settings_components', array($this, 'addGlobalMenu'), 1);
         add_action('fluentform/submission_inserted', [$this, 'insertGlobalInventory'], 10, 3);
-        
+        add_action('fluentform/after_transaction_status_change', [$this, 'maybeUpdateGlobalInventory'], 10, 3);
+
         /**
          * Validate Inventory Form Fields
          */
@@ -202,6 +203,28 @@ class InventoryController
             'success' => true,
             'message' => __("Invalid Item", 'fluentformpro'),
         ]);
+    }
+
+    public function maybeUpdateGlobalInventory($status, $submission, $transitionId)
+    {
+        $form = Helper::getForm($submission->form_id);
+        $inventoryFields = InventoryFieldsRenderer::getInventoryFields($form, ['global']);
+        if (empty($inventoryFields)) {
+            return;
+        }
+
+        try {
+            $submissionInventoryItems = SubmissionMeta::where('meta_key', 'ff_used_global_inventory_item')
+                ->where('response_id', $submission->id)
+                ->where('form_id', $form->id);
+            if ($submissionInventoryItems->count() > 0) {
+                if ('refunded' === $status) {
+                    $submissionInventoryItems->update(['status' => 'refunded']);
+                } else {
+                    $submissionInventoryItems->update(['status' => null]);
+                }
+            }
+        } catch (\Exception $e) {}
     }
     
     public function insertGlobalInventory($insertId, $formData, $form)

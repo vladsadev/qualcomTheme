@@ -1,7 +1,5 @@
 <?php
 
-use FluentForm\App\Helpers\Helper;
-
 class FluentFormAddOnChecker
 {
     private $vars;

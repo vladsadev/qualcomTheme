@@ -219,7 +219,11 @@ class PaymentAction
         $paymentTotal = 0;
         if ($items) {
             foreach ($items as $index => $item) {
-                $paymentTotal += $item['line_total'];
+                if ($item['type'] == 'discount') {
+                    $paymentTotal -= $item['line_total'];
+                } else {
+                    $paymentTotal += $item['line_total'];
+                }
                 $items[$index]['submission_id'] = $insertId;
                 $items[$index]['form_id'] = $submission['form_id'];
             }

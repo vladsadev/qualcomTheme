@@ -1,8 +1,8 @@
 <?php get_header(); ?>
 
-<main class="">
+<main>
     <!--~~~~~~~~~~~~~~~ HOME ~~~~~~~~~~~~~~~-->
-    <section id="home" class="pt-16 text-slate-200 md:pt-28">
+    <section id="home" class="pt-16 text-slate-200 md:pt-24">
         <!-- links hero container -->
         <div class="md:container hidden">
             <ul
@@ -17,22 +17,22 @@
         </div>
         <!-- portada -->
         <div class="h-[70vh] bg-cover lg:h-[75vh] pt-12 md:pt-24"
-             style="background-image: url(<?= get_theme_file_uri('src/assets/images/bg-hero-portada.jpg') ?>)">
+             style="background-image: url(<?= get_theme_file_uri( 'src/assets/images/bg-hero-portada.jpg' ) ?>)">
             <div
                     class="container flex h-full flex-col items-center justify-center gap-8 text-center lg:items-start lg:text-left 2xl:px-16"
             >
                 <h1 class="max-w-4xl text-shadow-md">
-                    <?= get_field('titulo_portada_principal') ?>
+					<?= get_field( 'titulo_portada_principal' ) ?>
                 </h1>
                 <p class="text-shadow-md text-xl">
-                    <?= get_field('subtitulo_portada_principal')?>
+					<?= get_field( 'subtitulo_portada_principal' ) ?>
                 </p>
-                <a class="btn" href="<?= site_url('servicios') ?>">Ver Más</a>
+                <a class="btn" href="<?= site_url( 'servicios' ) ?>">Ver Más</a>
             </div>
         </div>
         <!-- Detalles del hero-->
         <div class="flex flex-col bg-repeat py-5 md:py-10"
-             style="background-image: url(<?= get_theme_file_uri('src/assets/images/bg-pcb.png') ?>)">
+             style="background-image: url(<?= get_theme_file_uri( 'src/assets/images/bg-pcb.png' ) ?>)">
             <div
                     class="container flex flex-col gap-4 md:flex-row md:items-center"
             >
@@ -43,7 +43,7 @@
                 </div>
                 <div class="space-y-5 px-4 text-center md:w-1/2 md:text-left">
                     <p class="pb-2">
-                        <?= get_field('descripcion_productos') ?>
+						<?= get_field( 'descripcion_productos' ) ?>
                     </p>
                 </div>
             </div>
@@ -52,7 +52,7 @@
 
     <!--~~~~~~~~~~~~~~~SOLUCIONES ~~~~~~~~~~~~~~~-->
     <section id="soluciones" class="bg-repeat py-10 text-slate-200" style="background-image:
-            url(<?= get_theme_file_uri('src/assets/images/bg-pcb.png') ?>)">
+            url(<?= get_theme_file_uri( 'src/assets/images/bg-pcb.png' ) ?>)">
         <h2
                 class="py-3 text-center font-rajdhani text-2xl font-bold lg:text-4xl"
         >
@@ -62,7 +62,7 @@
             <!-- First Tile -->
             <div
                     class="flex h-[21rem] flex-col items-center justify-center gap-4 bg-cover bg-top py-10 text-center lg:h-[24rem] lg:justify-start 2xl:h-[29rem]"
-                    style="background-image: url(<?= get_theme_file_uri('src/assets/images/bg-venta.png') ?>)"
+                    style="background-image: url(<?= get_theme_file_uri( 'src/assets/images/bg-venta.png' ) ?>)"
             >
                 <p
                         class="text-shadow max-w-xl font-rajdhani text-4xl font-bold lg:text-5xl"
@@ -70,9 +70,9 @@
                     Venta de equipos informáticos y accesorios
                 </p>
                 <p class="text-shadow max-w-2xl lg:text-lg">
-                    <?= get_field('descripcion_venta_de_equipos') ?>
+					<?= get_field( 'descripcion_venta_de_equipos' ) ?>
                 </p>
-                <a class="btn" href="<?= site_url('servicios') ?>">Conocer más</a>
+                <a class="btn" href="<?= site_url( 'servicios' ) ?>">Conocer más</a>
             </div>
 
             <!-- second and third tile -->
@@ -82,8 +82,8 @@
                 <!-- second tile -->
                 <div
                         class="flex h-[21rem] flex-col items-center justify-center gap-4 bg-cover bg-top py-10 lg:h-[25rem] lg:w-full lg:items-start lg:justify-end lg:p-8 2xl:h-[30rem]"
-                        style="background-image: url(<?= get_theme_file_uri('src/assets/images/bg-mantenimiento.png')
-                        ?>)"
+                        style="background-image: url(<?= get_theme_file_uri( 'src/assets/images/bg-mantenimiento.png' )
+						?>)"
                 >
                     <p
                             class="text-shadow font-rajdhani text-3xl font-bold lg:max-w-md lg:text-3xl"
@@ -91,7 +91,7 @@
                         Servicio de mantenimiento y repación de equipos
                     </p>
                     <p class="text-shadow lg:max-w-md">
-                        <?= get_field('descripcion_mantenimiento_y_reparacion') ?>
+						<?= get_field( 'descripcion_mantenimiento_y_reparacion' ) ?>
                     </p>
                     <a class="btn" href="#">Conocer más</a>
                 </div>
@@ -99,7 +99,7 @@
                 <!-- third tile -->
                 <div
                         class="flex h-[21rem] flex-col items-center justify-center gap-4 bg-cover bg-top py-10 lg:h-[25rem] lg:w-full lg:items-start lg:justify-end lg:p-8 2xl:h-[30rem]"
-                        style="background-image: url(<?= get_theme_file_uri('src/assets/images/bg-soporte.png') ?>)"
+                        style="background-image: url(<?= get_theme_file_uri( 'src/assets/images/bg-soporte.png' ) ?>)"
                 >
                     <p
                             class="text-shadow font-rajdhani text-3xl font-bold lg:max-w-md lg:text-3xl"
@@ -107,7 +107,7 @@
                         Asesoramiento y Soporte técnico profesional
                     </p>
                     <p class="text-shadow lg:max-w-md">
-                        <?= get_field('descripcion_soporte_tecnico') ?>
+						<?= get_field( 'descripcion_soporte_tecnico' ) ?>
                     </p>
                     <a class="btn" href="#">Conocer más</a>
                 </div>
@@ -115,52 +115,29 @@
         </div>
     </section>
 
-    <!--~~~~~~~~~~~~~~~ Nuestras MARCAS - NUESTRO PRODUCTOS~~~~~~~~~~~~~~~-->
-    <section id="productos" class="bg-white p-4 lg:pb-8 lg:pt-14">
-        <h3 class="text-center text-2xl font-bold capitalize lg:text-4xl">
-            Nuestras marcas
-        </h3>
-        <div class="container my-10 flex justify-center">
+    <!--~~~~~~~~~~~~~~~ Nuestras MARCAS ~~~~~~~~~~~~~~-->
+    <section id="productos" class="bg-white">
+		<?php get_template_part( 'template-parts/content', 'brands' ) ?>
+    </section>
+    <!--    Nuestros productos-->
+    <section class="bg-slate-200 py-4 lg:py-8">
+        <div class="relative mb-8 container">
+            <!-- CABECERA -->
             <div
-                    class="scroller box-border max-w-[1250px] pointer-events-none select-none"
-                    data-speed="fast"
-                    data-direction="left"
-            >
-                <ul class="tag-list scroller__inner flex flex-wrap gap-4 text-white">
-                    <?php $frontPageBrands = new WP_Query([
-                        'post_type' => 'brand'
-                    ]);
-                    while ($frontPageBrands->have_posts()) : $frontPageBrands->the_post();
-                        $imgBrandURL = get_field('logotipo_de_la_marca'); ?>
-                        <!--                        <div>--><?php //echo $imgBrandURL['sizes']['logotiposDeEmpresas'] ?><!--</div>-->
-
-                        <img class="max-h-16 w-full mx-3" src="<?= $imgBrandURL['sizes']['logotiposDeEmpresas'] ?>"
-                             alt=""/>
-
-                    <?php endwhile;
-                    wp_reset_postdata(); ?>
-                </ul>
-            </div>
-        </div>
-
-
-        <!-- ## CABECERA PRODUCTOS ## -->
-        <div>
-            <div
-                    class="container relative flex flex-col items-center justify-between py-6 lg:flex-row"
-            >
+                    class="relative flex flex-col items-center justify-between py-6 lg:flex-row">
                 <h2 class="text-3xl font-bold">Productos</h2>
-                <p class="ml-1 md:flex-1">
-                    Lorem ipsum dolor sit amet consectetur adipiscing elit
+                <p class="ml-1 md:ml-3 md:flex-1 self-end">
+                    Productos originales de las mejores marcas.
                 </p>
-                <a href="#" class="btn-nf">Ver Todos</a>
+                <a class="btn-nf" href="<?= site_url( '/blog' ) ?>">Ver todas</a>
                 <p
-                        class="absolute left-0 right-0 top-0 mx-auto max-w-max bg-primary_yellow px-1 font-semibold uppercase text-white lg:left-8 lg:mx-0"
+                        class="absolute -top-2 mx-auto ml-0 mr-0 max-w-max bg-primary_yellow px-1 text-center font-semibold uppercase text-white lg:left-0"
                 >
                     Nuestros
                 </p>
             </div>
         </div>
+
     </section>
 
     <!--~~~~~~~~~~~~~~~ Sobre Nosotros ~~~~~~~~~~~~~~~-->
@@ -175,7 +152,7 @@
         >
             <!-- video -->
             <div class="lg:w-1/2">
-                <img src="<?= get_theme_file_uri('src/assets/images/play-video.png') ?>" alt=""/>
+                <img src="<?= get_theme_file_uri( 'src/assets/images/play-video.png' ) ?>" alt=""/>
             </div>
             <!-- descripcion -->
             <div
@@ -198,7 +175,7 @@
 
     <!-- Testimonios -->
     <section id="testimonios" class="bg-pcb bg-repeat py-4 md:py-16">
-        <?php get_template_part('template-parts/content', 'testimonios') ?>
+		<?php get_template_part( 'template-parts/content', 'testimonios' ) ?>
     </section>
     <!--~~~~~~~~~~~~~~~ BLOG ~~~~~~~~~~~~~~~-->
     <section id="publicaciones" class="bg-white py-2">
@@ -210,7 +187,7 @@
                 <p class="ml-1 md:ml-3 md:flex-1">
                     Lorem ipsum dolor sit amet consectetur adipiscing elit
                 </p>
-                <a class="btn-nf" href="<?= site_url('/blog') ?>">Ver todas</a>
+                <a class="btn-nf" href="<?= site_url( '/blog' ) ?>">Ver todas</a>
                 <p
                         class="absolute -top-2 mx-auto ml-0 mr-0 max-w-max bg-primary_yellow px-1 text-center font-semibold uppercase text-white lg:left-0"
                 >
@@ -218,19 +195,19 @@
                 </p>
             </div>
             <div class="">
-                <?php
+				<?php
 
-                $frontPagePosts = new WP_Query(array(
-                    'posts_per_page' => 3,
+				$frontPagePosts = new WP_Query( array(
+					'posts_per_page' => 3,
 
 
-                ));
-                ?>
+				) );
+				?>
                 <ul
                         class="grid grid-cols-1 gap-8 px-6 sm:grid-cols-2 md:grid-cols-2 md:px-0 lg:grid-cols-3
                         xl:gap-6"
                 >
-                    <?php while ($frontPagePosts->have_posts()) : $frontPagePosts->the_post(); ?>
+					<?php while ( $frontPagePosts->have_posts() ) : $frontPagePosts->the_post(); ?>
                         <!-- GRIDS - POST -->
                         <li
                                 class="mb-2 flex max-h-[395px] min-h-48 flex-col gap-1 overflow-hidden shadow-lg
@@ -248,24 +225,24 @@
                             <div class="flex h-1/2 px-2 flex-col items-start">
                                 <a class="pt-2" href="<?= the_permalink() ?>">
                                     <h3 class="text-xl font-semibold lg:text-2xl">
-                                        <?= the_title() ?>
+										<?= the_title() ?>
                                     </h3>
                                 </a>
                                 <p
                                         class="h-24 text-ellipsis grow overflow-hidden pb-3 pt-1 text-justify text-sm
                                         box-border"
                                 >
-                                    <?= (has_excerpt()) ? get_the_excerpt() : wp_trim_words(get_the_content(), 18) ?>
+									<?= ( has_excerpt() ) ? get_the_excerpt() : wp_trim_words( get_the_content(), 18 ) ?>
                                 </p>
                                 <a class="btn-nf my-2" href="<?= the_permalink() ?>">Leer Más </a>
                             </div>
                         </li>
-                    <?php endwhile;
-                    wp_reset_postdata(); ?>
+					<?php endwhile;
+					wp_reset_postdata(); ?>
                 </ul>
             </div>
             <div class="mt-6 text-primary_yellow font-semibold text-lg">
-                <?= paginate_links() ?>
+				<?= paginate_links() ?>
             </div>
         </div>
         <!-- paginacion-->

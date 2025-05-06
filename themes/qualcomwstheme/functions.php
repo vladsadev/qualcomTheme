@@ -1,6 +1,9 @@
 <?php
+require_once get_template_directory() . '/inc/navigation-links.php';
+require_once get_template_directory() . '/inc/navigation-links-template.php';
+require_once get_template_directory() . '/inc/search-overlay.php';
+
 require_once get_template_directory() . '/inc/dependencias.php';
-require_once get_template_directory() . '/inc/my-functions.php';
 
 add_action('wp_enqueue_scripts', 'themeLoadAssets');
 

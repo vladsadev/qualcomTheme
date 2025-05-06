@@ -1,5 +1,4 @@
 <!--~~~~~~~~~~~~~~~ FOOTER ~~~~~~~~~~~~~~~-->
-<!--~~~~~~~~~~~~~~~ FOOTER ~~~~~~~~~~~~~~~-->
 <footer
         class="mt-auto bg-main_blue pb-0 pt-10 leading-none text-slate-300 md:pt-20 lg:pt-24"
 >
@@ -16,7 +15,7 @@
                 </p>
                 <img
                         class="inline-block w-36"
-                        src="<?php get_theme_file_uri( 'src/assets/images/logo-dark.png' ) ?>"
+                        src="<?php get_theme_file_uri('src/assets/images/logo-dark.png') ?>"
                         alt=""
                 />
             </div>
@@ -86,20 +85,10 @@
         </div>
     </div>
 </footer>
-<div class="search-overlay ">
-    <div class="container bg-main_blue py-8 rounded-sm lg:py-10  mt-2">
-        <div class="flex items-center bg-red-800">
-            <i class="ri-search-line text-xl md:text-3xl px-4 py-2 text-primary_yellow"></i>
-            <input class="bg-slate-200 text-xl md:text-3xl w-full py-2 px-1 lg:text-4x placeholder:text-slate-500"
-                   type="text"
-                   placeholder="Qué estás buscando?">
-            <i id="search-overlay__close" class="ri-close-large-line px-4 py-2 text-primary_yellow text-2xl cursor-pointer
-            md:text-3xl
-            lg:text-4xl"></i>
 
-        </div>
-    </div>
-</div>
+
+<?php searchOverlay(); ?>
+
 
 
 <?php wp_footer(); ?>

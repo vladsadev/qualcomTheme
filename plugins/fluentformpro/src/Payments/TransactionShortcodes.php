@@ -2,7 +2,6 @@
 
 namespace FluentFormPro\Payments;
 
-use FluentForm\App\Helpers\Helper;
 use FluentForm\Framework\Helpers\ArrayHelper;
 use FluentFormPro\Payments\Classes\PaymentReceipt;
 use FluentFormPro\Payments\Orders\OrderData;

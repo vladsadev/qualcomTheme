@@ -1,7 +1,45 @@
+/*.search-overlay {*/
+/*    @apply h-[100vh] bg-slate-200/80 w-full fixed top-[-200%] z-50;*/
+/*}*/
+
+/*.search-overlay--active {*/
+/*    @apply top-[0%] transition-all duration-700 ease-in-out;*/
+/*}*/
+
 .search-overlay {
-    @apply h-[100vh] bg-slate-200/80 w-full fixed top-[-200%] z-50;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
 }
 
-.search-overlay--active {
-    @apply top-[0%] transition-all duration-700 ease-in-out;
+.search-overlay.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.body-no-scroll {
+    /*overflow: hidden;*/
+    overflow-y: hidden;
+}
+
+@keyframes spin {
+    0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+
+.spinner-loader {
+    margin-top: 45px;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    border: 0.25rem solid rgba(0, 0, 0, 0.2);
+    border-top-color: black;
+    -webkit-animation: spin 1s infinite linear;
+    animation: spin 1s infinite linear;
 }

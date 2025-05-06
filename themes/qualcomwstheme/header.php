@@ -10,15 +10,41 @@
 
 </head>
 <body class="flex absolute w-full h-screen flex-col <?php body_class(); ?>">
+<?php
+
+// ENLACES DE NAVEGACIÓN
+$args = navigationLinks();
+/**
+ * Función auxiliar para verificar condiciones
+ */
+function check_active_condition($condition)
+{
+    switch ($condition) {
+        case 'is_front_page':
+            return is_front_page();
+        case "is_page('sobre-nosotros')":
+            return is_page('sobre-nosotros');
+        case "is_page('servicios')":
+            return is_page('servicios');
+        case "get_post_type() === 'post'":
+            return get_post_type() === 'post';
+        case "is_page('contacto')":
+            return is_page('contacto');
+        default:
+            return false;
+    }
+}
+
+?>
 
 <header id="navbar" class="fixed left-0 top-0 z-10 p-1 w-full bg-slate-50">
-    <nav
-            class="container flex h-16 items-center justify-between pb-6 pt-8 sm:h-28 sm:pb-4 md:items-end"
-    >
+    <nav class="w-[95%] mx-auto 2xl:container flex h-16 items-center justify-between pb-6 pt-8 sm:h-24 sm:pb-4
+    md:items-end">
         <!-- Hamburger -->
         <div class="cursor-pointer text-xl sm:text-2xl lg:hidden">
             <i id="hamburger-icon" class="ri-menu-4-line"></i>
         </div>
+
         <!-- Logo -->
         <a class="cursor-pointer" href="<?= site_url('/') ?>">
             <img
@@ -27,66 +53,8 @@
                     alt="Main Logo"
             />
         </a>
-        <!-- Menu PANEL: navigation links, close icons -->
-        <div
-                id="nav-menu"
-                class="absolute left-[-100%] top-0 z-20 min-h-[90vh] w-full overflow-hidden border-b-2 border-emerald-800 bg-dark_blue px-5 duration-500 ease-out md:w-1/2 md:px-10 lg:static lg:min-h-fit lg:w-auto lg:border-0 lg:bg-transparent"
-        >
-            <!-- ###### NAVIGATION Links #####  -->
-            <ul
-                    class="flex flex-col items-start gap-8 pt-24 lg:flex-row lg:items-end lg:pt-0"
-            >
-                <li <?= is_front_page() ? 'class=active' : 'class=nav-link' ?>>
-                    <a href="<?= site_url('/'); ?>"
-                    >Inicio <i class="ri-arrow-down-s-line"></i>
-                    </a>
-                </li>
-                <li <?= is_page('sobre-nosotros') ? 'class=active' : 'class=nav-link' ?>>
-                    <a
-                            href="<?= site_url('/sobre-nosotros') ?>"
-                    >Sobre<br>Nosotros<i class="ri-arrow-down-s-line"></i
-                        ></a>
-                </li>
-                <li <?= is_page('servicios') ? 'class=active' : 'class=nav-link' ?>>
 
-                    <a href="<?= site_url('/servicios') ?>"
-                    >Servicios/<br/>Productos<i class="ri-arrow-down-s-line"></i
-                        ></a>
-                </li>
-                <li <?= (get_post_type() === 'post') ? 'class=active' : 'class=nav-link' ?>>
-                    <a href=<?= site_url('/blog') ?>
-                    >Blogs/<br/>Noticias<i class="ri-arrow-down-s-line"></i
-                        ></a>
-                </li>
-                <li <?= is_page('contacto') ? 'class=active' : 'class=nav-link' ?>>
-                    <a href=<?= site_url('contacto') ?>
-                    >Contacto<i class="ri-arrow-down-s-line"></i
-                        ></a>
-                </li>
-            </ul>
-            <!-- Close menu icon mobile version -->
-            <div
-                    class="absolute right-5 top-5 cursor-pointer text-xl text-slate-200 sm:text-2xl lg:hidden"
-            >
-                <i class="ri-close-large-line" id="close-icon"></i>
-            </div>
-
-            <!-- Top right icons for MOBILE version:search-icon, register and sign in -->
-            <div class="flex cursor-pointer items-center gap-5 pt-20 lg:hidden">
-                <a class="nav-link" href="<?= esc_url(site_url('/wp-signup.php')) ?>">Registrarse</a>
-                <a class="nav-link" href="<?= esc_url(wp_login_url()) ?>">Iniciar Sesión</a>
-            </div>
-        </div>
-        <!-- Top right icons DESKTOP: search-icon, Sign in and login -->
-        <div
-                class="flex cursor-pointer items-center gap-5 text-xl sm:text-2xl lg:self-center"
-        >
-            <!--            <span class="search-trigger js-search-trigger"><i class="fa fa-search" aria-hidden="true"></i></span>-->
-
-            <i class="ri-search-line js-search-trigger hover:text-primary_yellow"></i>
-            <!--            <a class="nav-link hidden lg:block" href="--><?php //= esc_url(site_url('/wp-signup.php'))
-            //            ?><!--">Registrarse</a>-->
-            <a class="nav-link hidden lg:block" href="<?= esc_url(wp_login_url()) ?>">Iniciar Sesión</a>
-        </div>
+        <!--   LINKS DE NAVEGACIÓN -->
+        <?php navigationTemplate($args); ?>
     </nav>
 </header>

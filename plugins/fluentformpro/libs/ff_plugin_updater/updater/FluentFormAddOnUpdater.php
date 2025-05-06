@@ -4,8 +4,6 @@
 //set_site_transient( 'update_plugins', null );
 
 // Exit if accessed directly
-use FluentForm\App\Helpers\Helper;
-
 if (!defined('ABSPATH')) {
     exit;
 }

@@ -380,6 +380,10 @@ class InventoryValidation
     {
         return SubmissionMeta::select(['name', 'value'])
             ->where('meta_key', 'ff_used_global_inventory_item')
+            ->where(function($query) {
+                $query->where('status', '!=', 'refunded')
+                    ->orWhereNull('status');
+            })
             ->whereIn('name', $usedInventoryFields)
             ->with(['form' => function ($query) {
                 $query->select(['title']);

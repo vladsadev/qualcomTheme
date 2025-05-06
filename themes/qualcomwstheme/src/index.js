@@ -9,6 +9,9 @@ import  Search from "./modules/Search"
 //Instancias
 const search = new Search()
 
+
+
+
 // const searchIcon = document.getElementById('search-icon-trigger')
 // const searcOverlay = document.getElementById('search-overlay')
 // console.log(searcOverlay)

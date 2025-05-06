@@ -9,7 +9,6 @@ if (!defined('ABSPATH')) {
 use FluentForm\App\Helpers\Helper;
 use FluentForm\App\Modules\Form\FormFieldsParser;
 use FluentForm\App\Services\Browser\Browser;
-use FluentForm\Framework\Helpers\ArrayHelper;
 use FluentForm\Framework\Helpers\ArrayHelper as Arr;
 use FluentForm\App\Models\Form;
 
@@ -194,8 +193,8 @@ class DraftSubmissionsManager
         $this->verify();
         $data = null;
         $entry = false;
-        $hash = ArrayHelper::get($_REQUEST, 'hash');
-        $formId = intval(ArrayHelper::get($_REQUEST, 'form_id'));
+        $hash = Arr::get($_REQUEST, 'hash');
+        $formId = intval(Arr::get($_REQUEST, 'form_id'));
         $entry = $this->get($hash, $formId);
 
         if (!$entry && $userId = get_current_user_id()) {

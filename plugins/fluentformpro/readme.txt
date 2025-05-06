@@ -4,7 +4,7 @@ Tags: contact form, contact forms, wp forms, forms, form builder, contact form b
 Requires at least: 4.5
 Tested up to: 6.7
 Requires PHP: 7.4
-Stable tag: 6.0.1
+Stable tag: 6.0.3
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -361,6 +361,14 @@ The entire source code is <a href="https://github.com/fluentform/fluentform">ava
 12. Asset Loading Comparison with Other Plugins
 
 == Changelog ==
+
+= 6.0.3 (Date: April 16, 2025) =
+- Fixes early textdomain loading issue
+- Fixes global inventory tracking for refunded payments
+- Fixes AffiliateWP referral amounts with applied coupons
+- Fixes step scrolling with Custom HTML fields
+- Fixes style unit values disappearing when switching unit types
+- Fix placeholder issue for Rich Text Input
 
 = 6.0.1 (Date: March 27, 2025) =
 - Fix webhook settings validation issue

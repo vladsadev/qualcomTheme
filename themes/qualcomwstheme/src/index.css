@@ -39,12 +39,12 @@ p {
 }
 
 .nav-link {
-    @apply font-alegraya_sans text-sm font-medium text-slate-200 duration-300 md:text-base lg:text-mid_blue xl:text-lg;
+    @apply font-alegraya_sans text-sm font-medium text-slate-200 duration-300 md:text-base lg:text-mid_blue 2xl:text-xl;
 }
 
 .nav-link:hover,
 .active {
-    @apply text-primary_yellow;
+    @apply text-primary_yellow md:text-base 2xl:text-xl font-medium;
 }
 
 .nav-link-footer:hover {

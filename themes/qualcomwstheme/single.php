@@ -1,19 +1,20 @@
 <?php get_header(); ?>
-<!-- Imagen de cabecera-->
-<section class="bg-white py-8">
-    <div class="container mt-24">
-        <!-- se cambiara por una image con formato -->
-        <div class="container md:w-3/4">
-            <div class="max-h-[600px] w-full">
-                <img class="object-fit object-center" src="<?php the_post_thumbnail_url( 'postBanner' )
-				?>" alt="Imagen
+
+<main class="bg-white">
+    <!-- Imagen de cabecera-->
+    <section class="bg-white py-8">
+        <div class="container mt-24">
+            <!-- se cambiara por una image con formato -->
+            <div class="container md:w-3/4">
+                <div class="max-h-[600px] w-full">
+                    <img class="object-fit object-center" src="<?php the_post_thumbnail_url( 'postBanner' )
+					?>" alt="Imagen
                 destacada
                 del post">
+                </div>
             </div>
         </div>
-    </div>
-</section>
-<main class="bg-white">
+    </section>
     <section class="container">
         <div class="w-3/4 mx-auto pt-2 md:pt-6">
             <h2 class="text-lg md:text-2xl lg:text-3xl font-semibold"><?= the_title() ?></h2>

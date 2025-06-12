@@ -1,0 +1,42 @@
+/* Estilos para las tarjetas de soluciones */
+.solution-card {
+    @apply flex h-[21rem] flex-col items-center justify-center gap-4 bg-cover bg-top py-10 text-center;
+    @apply lg:h-[24rem] lg:justify-start;
+    @apply 2xl:h-[29rem];
+}
+
+.solution-card--secondary {
+    @apply lg:h-[25rem] lg:w-full lg:items-start lg:justify-end lg:p-8 lg:text-left;
+    @apply 2xl:h-[30rem];
+}
+
+.solution-card__content {
+    @apply flex flex-col items-center gap-4;
+    @apply lg:items-start;
+}
+
+.solution-card__title {
+    @apply text-shadow max-w-xl font-rajdhani text-4xl font-bold;
+    @apply lg:text-5xl;
+}
+
+.solution-card__title--secondary {
+    @apply text-3xl;
+    @apply lg:max-w-md lg:text-3xl;
+}
+
+.solution-card__description {
+    @apply text-shadow max-w-2xl;
+    @apply lg:text-lg;
+}
+
+.solution-card__description--secondary {
+    @apply max-w-none;
+    @apply lg:max-w-md;
+}
+
+.solution-grid {
+    @apply flex flex-col gap-4 text-center;
+    @apply md:flex-row;
+    @apply lg:gap-5 lg:text-left;
+}

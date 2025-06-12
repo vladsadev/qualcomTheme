@@ -37,6 +37,7 @@ class API
         }
 
         $body = wp_remote_retrieve_body($response);
+        $responseCode = wp_remote_retrieve_response_code($response);
         $responseData = json_decode($body, true);
 
         if (isset($responseData['error'])) {
@@ -44,7 +45,7 @@ class API
             if (!$message) {
                 $message = __('Unknown Paddle API request error', 'fluentformpro');
             }
-            return new \WP_Error(423, $message, $responseData);
+            return new \WP_Error($responseCode, $message, $responseData);
         }
 
         return $responseData;

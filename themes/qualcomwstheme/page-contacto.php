@@ -1,6 +1,5 @@
 <?php get_header();
-
-banner();
+getPageBanner();
 ?>
 <main>
     <?php while (have_posts()):
@@ -40,6 +39,7 @@ banner();
                 </div>
             </div>
         </section>
+
         <!-- CONTACTANOS -->
         <section class="bg-slate-50">
             <div class="mt-6 bg-gray-200/50 md:py-20">
@@ -81,8 +81,7 @@ banner();
                 </div>
             </div>
         </section>
-
-
     <?php endwhile; ?>
+
 </main>
 <?php get_footer() ?>

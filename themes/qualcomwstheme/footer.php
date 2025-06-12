@@ -15,7 +15,7 @@
                 </p>
                 <img
                         class="inline-block w-36"
-                        src="<?php get_theme_file_uri('src/assets/images/logo-dark.png') ?>"
+                        src="<?php get_theme_file_uri( 'src/assets/images/logo-dark.png' ) ?>"
                         alt=""
                 />
             </div>
@@ -87,9 +87,7 @@
 </footer>
 
 
-<?php searchOverlay(); ?>
-
-
+<?php get_template_part( 'template-parts/search-overlay' ) ?>
 
 <?php wp_footer(); ?>
 </body>

@@ -72,6 +72,9 @@ class PaymentHandler
         new SquareInline();
 
         add_action('fluentform/rendering_payment_form', function ($form) {
+            if (PaymentHelper::isPaymentScriptLoadFromFree()) {
+                return;
+            }
             wp_enqueue_script('fluentformpro-payment-handler', FLUENTFORMPRO_DIR_URL . 'public/js/payment_handler_pro.js', array('jquery'), FLUENTFORMPRO_VERSION, true);
         });
     }

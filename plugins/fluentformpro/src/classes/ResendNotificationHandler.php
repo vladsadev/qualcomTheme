@@ -308,6 +308,23 @@ class ResendNotificationHandler
             }
         }
 
+        $uploadDir = wp_upload_dir();
+        $mediaAttachments = ArrayHelper::get($processedValues, 'media_attachments');
+
+        if (!empty($mediaAttachments) && is_array($mediaAttachments)) {
+            foreach ($mediaAttachments as $file) {
+                $fileUrl = ArrayHelper::get($file, 'url');
+                if ($fileUrl && strpos($fileUrl, $uploadDir['baseurl']) === 0) {
+                    $relativePath = str_replace($uploadDir['baseurl'], '', $fileUrl);
+                    $filePath = wp_normalize_path($uploadDir['basedir'] . $relativePath);
+
+                    if (file_exists($filePath)) {
+                        $attachments[] = $filePath;
+                    }
+                }
+            }
+        }
+
         $attachments = apply_filters_deprecated(
             'fluentform_email_attachments',
             [

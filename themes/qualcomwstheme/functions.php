@@ -1,60 +1,37 @@
 <?php
-require_once get_template_directory() . '/inc/navigation-links.php';
-require_once get_template_directory() . '/inc/navigation-links-template.php';
-require_once get_template_directory() . '/inc/search-overlay.php';
+require_once get_theme_file_path( 'inc/index.php' );
+// ===========================
+// Encolar scripts y estilos
+// ===========================
+add_action( 'wp_enqueue_scripts', 'themeLoadAssets' );
+function themeLoadAssets() {
+	// CSS externos por CDN
+	wp_enqueue_style( 'remix-icon', '//cdnjs.cloudflare.com/ajax/libs/remixicon/4.4.0/remixicon.min.css' );
+	wp_enqueue_style( 'swiper-css', 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css' );
+	wp_enqueue_style('font-awesome', '//cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css');
 
-require_once get_template_directory() . '/inc/dependencias.php';
+	// CSS del tema
+	wp_enqueue_style( 'ourmaincss', get_theme_file_uri( '/build/index.css' ) );
 
-add_action('wp_enqueue_scripts', 'themeLoadAssets');
+	// JS externos por CDN
+	wp_enqueue_script( 'swiper-js', 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js', array(), null, true );
 
+	// JS del tema
+	wp_enqueue_script(
+		'ourmainjs',
+		get_theme_file_uri( '/build/index.js' ),
+		array( 'wp-element', 'jquery' ),
+		'1.0',
+		true
+	);
 
-function themeAddFeaturesSupport()
-{
-    add_theme_support('title-tag');
-
-    add_theme_support('post-thumbnails');
-    add_image_size('pageBanner', 1800, 400, true);
-    add_image_size('postBanner', 1200, 600, true);
-    add_image_size('logotiposDeEmpresas', 400, 180, true);
+	// Variables accesibles desde JS
+	wp_localize_script( 'ourmainjs', 'ourData', array(
+		'root_url' => get_site_url()
+	) );
 }
 
-add_action('after_setup_theme', 'themeAddFeaturesSupport');
+// ===========================
+// Personalización de la página de login
+// ===========================
 
-function qualcom_estilos_propios_wp()
-{
-    add_theme_support('wp-block-styles'); // Activa los estilos por defecto de los bloques
-    wp_enqueue_style('core-blocks', get_theme_file_uri('/style.css'), array(), wp_get_theme()->get('Version'));
-}
-
-add_action('after_setup_theme', 'qualcom_estilos_propios_wp');
-
-
-function agregar_estilos_wp() // Agregamos estilos para mantener el formato de edición en las publicaciones
-{
-    wp_enqueue_style('wp-block-library'); // Carga los estilos por defecto de WordPress
-    wp_enqueue_style('wp-block-library-theme'); // Estilos adicionales de los bloques
-}
-
-add_action('wp_enqueue_scripts', 'agregar_estilos_wp');
-
-// # agregamos la plantilla reutilizable
-require_once get_template_directory() . '/inc/banner.php';
-
-// Personalizamos el login
-add_filter('login_headerurl', 'ourHeaderUrl');
-function ourHeaderUrl()
-{
-    return esc_url(site_url('/'));
-}
-
-add_action('login_enqueue_scripts', 'ourLoginCSS');
-function ourLoginCSS()
-{
-    wp_enqueue_style('ourmaincss', get_theme_file_uri('/build/index.css'));
-}
-
-add_filter('login_headertitle', 'ourHeaderTitle');
-function ourHeaderTitle()
-{
-    return get_bloginfo('name');
-}

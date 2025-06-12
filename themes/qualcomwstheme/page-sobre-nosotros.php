@@ -1,6 +1,6 @@
 <?php get_header();
 
-banner(); ?>
+getPageBanner(); ?>
 
     <main class="bg-white text-black">
         <?php while (have_posts()): the_post(); ?>

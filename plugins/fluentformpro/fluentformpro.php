@@ -2,7 +2,7 @@
 /**
 Plugin Name: Fluent Forms Pro Add On Pack
 Description: The Pro version of FluentForm, the most advanced, drag and drop form builder plugin for WordPress.
-Version: 6.0.3
+Version: 6.0.4
 Author: Fluent Forms
 Author URI: https://fluentforms.com
 Plugin URI: https://fluentforms.com/
@@ -14,7 +14,7 @@ Domain Path: /resources/languages
 defined('ABSPATH') or die;
 
 define('FLUENTFORMPRO', true);
-define('FLUENTFORMPRO_VERSION', '6.0.3');
+define('FLUENTFORMPRO_VERSION', '6.0.4');
 defined('FLUENTFORM_MINIMUM_CORE_VERSION') or define('FLUENTFORM_MINIMUM_CORE_VERSION', '6.0.0');
 define('FLUENTFORM_UPLOAD_DIR', '/fluentform');
 define('FLUENTFORMPRO_DIR_URL', plugin_dir_url(__FILE__));
@@ -425,6 +425,9 @@ if (!class_exists('FluentFormPro')) {
             (new \FluentFormPro\classes\DoubleOptin())->init();
     
             (new \FluentFormPro\classes\AdminApproval\AdminApproval())->init();
+           
+            (new \FluentFormPro\classes\FrontEndEntryView())->init();
+            
 
             \FluentFormPro\Components\Post\Bootstrap::boot();
     
@@ -681,4 +684,15 @@ add_filter('affwp_extended_integrations', function ($integrations) {
     ];
 
     return $integrations;
+});
+
+if (has_filter('weglot_ajax_no_translate')) {
+    add_filter('weglot_ajax_no_translate', function ($ajaxAction) {
+        $ajaxAction[] = 'fluentform_file_upload';
+        return $ajaxAction;
+    }, 10, 1);
+}
+
+add_action('fluentform_do_email_report_scheduled_tasks', function() {
+    \FluentFormPro\Uploader::removeOldTempFiles();
 });

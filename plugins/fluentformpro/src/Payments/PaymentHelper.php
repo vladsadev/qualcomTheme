@@ -20,6 +20,11 @@ class PaymentHelper
         return version_compare(FLUENTFORM_VERSION, FLUENTFORM_MINIMUM_CORE_VERSION, '>=');
     }
 
+    public static function isPaymentScriptLoadFromFree()
+    {
+        return version_compare(FLUENTFORM_VERSION, '6.0.4', '>=');
+    }
+
     public static function getFormCurrency($formId)
     {
         $settings = self::getFormSettings($formId, 'public');
@@ -825,7 +830,8 @@ class PaymentHelper
                 [
                     'is_inline'     => ArrayHelper::get($square, 'settings.embedded_checkout.value') == 'yes',
                     'inline_styles' => $squareInlineStyles,
-                    'settings'      => $squareSettings
+                    'settings'      => $squareSettings,
+                    'locale'        => 'en-US'
                 ],
                 $formId
             );

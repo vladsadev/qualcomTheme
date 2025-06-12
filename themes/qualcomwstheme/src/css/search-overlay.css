@@ -1,0 +1,176 @@
+/* Scroller optimizado para marcas */
+.brands-section {
+    padding: 2rem 0 1rem;
+}
+
+@media (min-width: 1280px) {
+    .brands-section {
+        padding-top: 2.5rem;
+        padding-bottom: 1.25rem;
+    }
+}
+
+.brands-title {
+    text-align: center;
+    font-size: clamp(1.875rem, 4vw, 3rem); /* 3xl a 5xl responsive */
+    font-weight: 700;
+    text-transform: capitalize;
+    margin-bottom: 2.5rem;
+}
+
+@media (min-width: 1024px) {
+    .brands-title {
+        font-size: clamp(3rem, 5vw, 3.75rem);
+    }
+}
+
+.brands-container {
+    margin: 2.5rem auto;
+    display: flex;
+    justify-content: center;
+    padding: 0 1rem;
+}
+
+/* Scroller principal */
+.scroller {
+    max-width: min(1250px, 90vw);
+    overflow: hidden;
+    position: relative;
+    pointer-events: none;
+    user-select: none;
+    box-sizing: border-box;
+}
+
+.scroller[data-animated="true"] {
+    mask: linear-gradient(
+            90deg,
+            transparent 0%,
+            black 12%,
+            black 88%,
+            transparent 100%
+    );
+    -webkit-mask: linear-gradient(
+            90deg,
+            transparent 0%,
+            black 12%,
+            black 88%,
+            transparent 100%
+    );
+}
+
+.scroller__inner {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 1rem;
+    width: fit-content;
+    padding: 1rem 0;
+}
+
+.scroller[data-animated="true"] .scroller__inner {
+    animation: scroll var(--animation-duration, 30s) linear infinite;
+    animation-direction: var(--animation-direction, normal);
+}
+
+/* Direcciones */
+.scroller[data-direction="left"] {
+    --animation-direction: normal;
+}
+
+.scroller[data-direction="right"] {
+    --animation-direction: reverse;
+}
+
+/* Velocidades */
+.scroller[data-speed="slow"] {
+    --animation-duration: 50s;
+}
+
+.scroller[data-speed="normal"] {
+    --animation-duration: 35s;
+}
+
+.scroller[data-speed="fast"] {
+    --animation-duration: 25s;
+}
+
+/* Animación optimizada */
+@keyframes scroll {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(calc(-50% - 0.5rem));
+    }
+}
+
+/* Estilos para las imágenes de marcas */
+.scroller__inner img {
+    max-height: 4rem; /* 16 en Tailwind */
+    width: auto;
+    max-width: 200px;
+    min-width: 120px;
+    margin: 0 0.75rem; /* mx-3 en Tailwind */
+    object-fit: contain;
+    filter: grayscale(0.8) opacity(0.75);
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+}
+
+.scroller__inner img:hover {
+    filter: grayscale(0) opacity(1);
+    transform: scale(1.02);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .brands-container {
+        margin: 1.5rem auto;
+    }
+
+    .scroller__inner {
+        gap: 0.75rem;
+        padding: 0.75rem 0;
+    }
+
+    .scroller__inner img {
+        max-height: 3rem;
+        min-width: 100px;
+        max-width: 160px;
+        margin: 0 0.5rem;
+    }
+
+    .scroller[data-speed="fast"] {
+        --animation-duration: 20s;
+    }
+}
+
+/* Pausa en hover para mejor UX */
+.scroller:hover .scroller__inner {
+    animation-play-state: paused;
+}
+
+/* Accesibilidad - Respeta preferencias de movimiento reducido */
+@media (prefers-reduced-motion: reduce) {
+    .scroller[data-animated="true"] .scroller__inner {
+        animation: none;
+    }
+
+    .scroller {
+        overflow-x: auto;
+        scrollbar-width: thin;
+    }
+
+    .scroller::-webkit-scrollbar {
+        height: 4px;
+    }
+
+    .scroller::-webkit-scrollbar-track {
+        background: rgba(0,0,0,0.1);
+        border-radius: 2px;
+    }
+
+    .scroller::-webkit-scrollbar-thumb {
+        background: rgba(0,0,0,0.3);
+        border-radius: 2px;
+    }
+}

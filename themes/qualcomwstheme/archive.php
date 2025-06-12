@@ -1,6 +1,6 @@
 <?php get_header();
 
-banner([
+getPageBanner([
 
 //    'title' => $title
 //    'leyenda' => 'Noticias sobre lo último en tecnología, reseñas de productos y más.',

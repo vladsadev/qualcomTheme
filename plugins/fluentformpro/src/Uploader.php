@@ -2,7 +2,6 @@
 
 namespace FluentFormPro;
 
-use FluentForm\App\Helpers\Helper;
 use FluentForm\App\Modules\Form\FormHandler;
 use FluentForm\App\Modules\Form\FormFieldsParser;
 use FluentForm\Framework\Helpers\ArrayHelper;
@@ -164,9 +163,7 @@ class Uploader extends FormHandler
                     'Use fluentform/starting_file_processing instead of fluentform_starting_file_processing.'
                 );
                 do_action('fluentform/starting_file_processing', $files, $uploadLocation, $formData, $form);
-                
                 $this->initUploads($files, $uploadLocation);
-                
                 $formattedFiles = [];
                 foreach ($files as $file) {
                     $formattedFiles[] = $this->getProcessedUrl($file, $uploadLocation);
@@ -293,7 +290,6 @@ class Uploader extends FormHandler
         } elseif ($uploadLocation == 'default') {
             $this->copyToDefault($files);
         }
-        self::removeOldTempFiles();
     }
     
     /**
@@ -510,26 +506,39 @@ class Uploader extends FormHandler
     /**
      * Cleanup temp Directory
      *
-     * @param $files
      * @return void
      */
-    private static function removeOldTempFiles()
+    public static function removeOldTempFiles()
     {
-       
         $maxFileAge = apply_filters('fluentform/temp_file_delete_time', 2 * 3600);
-
         $wpUploadDir = wp_upload_dir();
         $tempDir = $wpUploadDir['basedir'] . FLUENTFORM_UPLOAD_DIR . '/temp/';
 
         // Remove old temp files
-        if (is_dir($tempDir) and ($dir = opendir($tempDir))) {
+        if (is_dir($tempDir) && ($dir = opendir($tempDir))) {
+            $deletedCount = 0;
+            $maxDeletions = apply_filters('fluentform/temp_file_cleanup_batch_size', 50);
+
             while (($file = readdir($dir)) !== false) {
+                if ($file === '.' || $file === '..') {
+                    continue;
+                }
+
                 $tempFilePath = $tempDir . $file;
-                if ((filemtime($tempFilePath) < time() - $maxFileAge)) {
-                    @unlink($tempFilePath);
+                if (is_file($tempFilePath) && (filemtime($tempFilePath) < time() - $maxFileAge)) {
+                    if (@unlink($tempFilePath)) {
+                        $deletedCount++;
+                    }
+
+                    // Limit batch size to prevent timeouts
+                    if ($deletedCount >= $maxDeletions) {
+                        break;
+                    }
                 }
             }
             closedir($dir);
+
+            do_action('fluentform/temp_files_cleaned', $tempDir, $deletedCount, $maxFileAge, $maxDeletions);
         }
     }
     

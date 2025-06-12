@@ -2,9 +2,9 @@
 Contributors: techjewel,adreastrian,heera,wpmanageninja
 Tags: contact form, contact forms, wp forms, forms, form builder, contact form builder, fluent forms
 Requires at least: 4.5
-Tested up to: 6.7
+Tested up to: 6.8
 Requires PHP: 7.4
-Stable tag: 6.0.3
+Stable tag: 6.0.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -361,6 +361,27 @@ The entire source code is <a href="https://github.com/fluentform/fluentform">ava
 12. Asset Loading Comparison with Other Plugins
 
 == Changelog ==
+
+= 6.0.4 (Date: May 29, 2025) =
+- Adds submission view page for users to see their own submissions
+- Adds smartcode to embed submission view page link
+- Adds Square payment SDK locale support for multiple languages
+- Adds a new filter `payment_types` on payments page
+- Adds filter `fluentform/double_optin_invalid_confirmation_url_message` to customize double optin confirmation URL messages
+- Improves ChatGPT integration with HTML code support and loading indicators
+- Improves step form animations for better user experience
+- Improves temp file deletion process
+- Fixes issue where removing coupons didn't update payment summary
+- Fixes Paddle payment redirection problems
+- Fixes Paddle catalog and price items update issues
+- Fixes Paddle customer creation during payment
+- Fixes file attachments not working in Resend Email Notifications
+- Fixes `fluentform_payments` shortcode for subscription filtering by type/status
+- Fixes simple inventory counting inaccuracies when quantity is increased
+- Fixes file upload errors not clearing after subsequent uploads
+- Fixes missing files in save and resume functionality
+- Fixes conversational form per step data saving issues with custom HTML fields
+- Fixes Weglot translation ajax issue with file upload url
 
 = 6.0.3 (Date: April 16, 2025) =
 - Fixes early textdomain loading issue

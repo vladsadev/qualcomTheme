@@ -261,8 +261,9 @@ class DoubleOptin
     {
         $formId = intval(ArrayHelper::get($data, 'ff_landing'));
 
+        $invalidMessage = apply_filters('fluentform/double_optin_invalid_confirmation_url_message', __('Sorry! Invalid Form Confirmation URL', 'fluentformpro'));
         if (!$this->isActivated($formId)) {
-            die(__('Sorry! Invalid Form Confirmation URL', 'fluentformpro'));
+            die($invalidMessage);
         }
 
         $hash = sanitize_text_field(ArrayHelper::get($data, 'entry_confirmation'));
@@ -274,7 +275,7 @@ class DoubleOptin
             ->first();
 
         if (!$meta) {
-            die(__('Sorry! Invalid Form Confirmation URL', 'fluentformpro'));
+            die($invalidMessage);
         }
         $insertId = $meta->response_id;
 
@@ -284,7 +285,7 @@ class DoubleOptin
             ->first();
 
         if (!$entry) {
-            die(__('Sorry! Invalid Form Confirmation URL', 'fluentformpro'));
+            die($invalidMessage);
         }
 
         $submissionData = json_decode($entry->response, true);

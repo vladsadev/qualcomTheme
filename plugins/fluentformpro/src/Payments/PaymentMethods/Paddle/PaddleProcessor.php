@@ -77,12 +77,21 @@ class PaddleProcessor extends BaseProcessor
             $ipnDomain = FLUENTFORM_PAY_IPN_DOMAIN;
         }
 
-        $listenerUrl = add_query_arg(array(
+        $successArgs = [
             'fluentform_payment_api_notify' => 1,
             'payment_method'                => $this->method,
             'fluentform_payment'            => $submission->id,
             'transaction_hash'              => $transaction->transaction_hash,
-        ), $ipnDomain);
+            'type'                          => 'success'
+        ];
+        $successUrl = add_query_arg($successArgs, $ipnDomain);
+
+        $cancelArgs = array_merge($successArgs, ['type' => 'cancel']);
+        $cancelUrl = $submission->source_url;
+        if (!wp_http_validate_url($cancelUrl)) {
+            $cancelUrl = site_url($cancelUrl);
+        }
+        $cancelUrl = add_query_arg($cancelArgs, $cancelUrl);
 
         $currency = strtoupper($transaction->currency);
         $this->supportedCurrency($currency, $submission);
@@ -92,9 +101,12 @@ class PaddleProcessor extends BaseProcessor
         $paymentArgs = [
             'collection_mode' => 'automatic',
             'checkout'        => [
-                'url' => $listenerUrl
+                'url'                  => $successUrl,
+                'customer_success_url' => wp_sanitize_redirect($successUrl),
+                'customer_cancel_url'  => wp_sanitize_redirect($cancelUrl)
             ]
         ];
+
         $items = [];
 
         if (ArrayHelper::get($formPaymentSettings, 'paddle_transaction_type') == 'non_catalog_price') {
@@ -156,6 +168,11 @@ class PaddleProcessor extends BaseProcessor
 
         $paymentArgs = array_merge($paymentArgs, ['items' => $items]);
 
+        $customerId = $this->handleCustomer($submission, $form);
+        if ($customerId) {
+            $paymentArgs['customer_id'] = $customerId;
+        }
+
         $paymentArgs = apply_filters('fluentform/paddle_payment_args', $paymentArgs, $submission, $transaction, $form);
 
         $paymentIntent = (new API())->makeApiCall('transactions', $paymentArgs, $form->id, 'POST');
@@ -181,7 +198,11 @@ class PaddleProcessor extends BaseProcessor
                 ]
             ], 423);
         }
+
         if (ArrayHelper::get($paymentIntent, 'data.id')) {
+            // Store the payment intent ID for later verification
+            $this->setMetaData('paddle_payment_intent_id', ArrayHelper::get($paymentIntent, 'data.id'));
+
             $redirectUrl = ArrayHelper::get($paymentIntent, 'data.checkout.url');
             $logData = [
                 'parent_source_id' => $submission->form_id,
@@ -189,8 +210,8 @@ class PaddleProcessor extends BaseProcessor
                 'source_id'        => $submission->id,
                 'component'        => 'Payment',
                 'status'           => 'info',
-                'title'            => __('Redirect to your site', 'fluentformpro'),
-                'description'      => __('User redirect to your site for completing the payment', 'fluentformpro')
+                'title'            => __('Redirect to Paddle', 'fluentformpro'),
+                'description'      => __('User redirect to Paddle for completing the payment', 'fluentformpro')
             ];
 
             do_action('fluentform/log_data', $logData);
@@ -199,7 +220,7 @@ class PaddleProcessor extends BaseProcessor
                 'nextAction'   => 'payment',
                 'actionName'   => 'normalRedirect',
                 'redirect_url' => $redirectUrl,
-                'message'      => __('You are redirecting to your site to complete the purchase. Please wait while you are redirecting....',
+                'message'      => __('You are redirecting to complete the purchase. Please wait while you are redirecting....',
                     'fluentformpro'),
                 'result'       => [
                     'insert_id' => $submission->id,
@@ -210,33 +231,58 @@ class PaddleProcessor extends BaseProcessor
 
     public function handleSessionRedirectBack($data)
     {
-        $txn = sanitize_text_field(ArrayHelper::get($data, '_ptxn'));
-        if (!$txn) {
-            return;
-        }
-
+        $type = sanitize_text_field(ArrayHelper::get($data, 'type'));
         $submissionId = intval(ArrayHelper::get($data, 'fluentform_payment'));
+        $transactionHash = sanitize_text_field(ArrayHelper::get($data, 'transaction_hash'));
+
         $this->setSubmissionId($submissionId);
         $submission = $this->getSubmission();
         if (!$submission) {
             return;
         }
 
-        $transactionHash = sanitize_text_field(ArrayHelper::get($data, 'transaction_hash'));
+        $transaction = $this->getTransaction($transactionHash, 'transaction_hash');
 
-        $message = '<div class="ff_paddle_payment_container"><p></p></div>';
+        if (!$transaction) {
+            $returnData = [
+                'insert_id' => $submissionId,
+                'title'     => __('Invalid Transaction', 'fluentformpro'),
+                'result'    => false,
+                'error'     => __('No valid transaction found for this payment.', 'fluentformpro')
+            ];
+            $this->showPaymentView($returnData);
+            return;
+        }
 
-        $returnData = [
-            'insert_id' => $submissionId,
-            'title'     => __('Processing Paddle Payment', 'fluentformpro'),
-            'result'    => false,
-            'txn_id'    => $txn,
-            'error'     => $message,
-            'type'      => 'success',
-            'is_new'    => true
-        ];
+        if ($type == 'success') {
+            if ($transaction->status === 'paid' || $this->getMetaData('is_form_action_fired') == 'yes') {
+                $returnData = $this->getReturnData();
+                $returnData['type'] = 'success';
+            } else {
+                $message = '<div class="ff_paddle_payment_container"><p></p></div>';
 
-        $this->addCheckoutJs($submissionId, $transactionHash);
+                $returnData = [
+                    'insert_id' => $submissionId,
+                    'title'     => __('Processing Paddle Payment', 'fluentformpro'),
+                    'result'    => false,
+                    'error'     => $message,
+                    'type'      => 'success',
+                    'is_new'    => true,
+                    'txn_id'    => $transactionHash
+                ];
+
+                $this->addCheckoutJs($submissionId, $transactionHash);
+            }
+        } else {
+            $returnData = [
+                'insert_id' => $submissionId,
+                'title'     => __('Payment Cancelled', 'fluentformpro'),
+                'result'    => false,
+                'error'     => __('Looks like you have cancelled the payment. Please try again!', 'fluentformpro'),
+                'type'      => 'failed',
+                'is_new'    => false
+            ];
+        }
 
         $this->showPaymentView($returnData);
     }
@@ -337,6 +383,22 @@ class PaddleProcessor extends BaseProcessor
         $checkoutId = sanitize_text_field(ArrayHelper::get($vendorPayment, 'id'));
 
         if ($checkoutId) {
+            $this->setSubmissionId($transaction->submission_id);
+
+            // Get form settings for redirect URL
+            $form = $this->getForm();
+            $formSettings = PaymentHelper::getFormSettings($form->id);
+
+            // Determine redirect URL 
+            $redirectTo = ArrayHelper::get($formSettings, 'confirmation.redirectTo');
+            if ($redirectTo && $redirectTo == 'customUrl') {
+                $redirectUrl = ArrayHelper::get($formSettings, 'confirmation.customUrl');
+            } else if ($redirectTo) {
+                $redirectUrl = get_permalink($redirectTo);
+            } else {
+                $redirectUrl = wp_get_referer() ?: site_url();
+            }
+
             $logData = [
                 'parent_source_id' => $transaction->form_id,
                 'source_type'      => 'submission_item',
@@ -353,7 +415,9 @@ class PaddleProcessor extends BaseProcessor
             $submission = $this->getSubmission();
             $returnData = $this->handlePaid($submission, $transaction, $vendorPayment);
             $returnData['payment'] = $vendorPayment;
-            $returnData['success_message'] = __('Your payment has successfully marked as paid!', 'fluentformpro');
+            $returnData['success_message'] = __('Your payment has successfully been processed!', 'fluentformpro');
+            $returnData['redirect_url'] = $redirectUrl;
+            $returnData['title'] = __('Payment Successful', 'fluentformpro');;
 
             wp_send_json_success($returnData, 200);
         }
@@ -365,7 +429,6 @@ class PaddleProcessor extends BaseProcessor
                     '__entry_intermediate_hash')
             ]
         ], 423);
-
     }
 
     public function addCheckoutJs($submissionId, $transactionHash)
@@ -375,6 +438,27 @@ class PaddleProcessor extends BaseProcessor
             FLUENTFORMPRO_VERSION);
 
         $paymentMode = $this->getPaymentMode();
+        $submission = $this->getSubmission();
+        $form = $this->getForm();
+
+        // Get form settings for redirect URLs
+        $formSettings = PaymentHelper::getFormSettings($form->id);
+
+        // Determine redirect URL on success
+        $redirectTo = ArrayHelper::get($formSettings, 'confirmation.redirectTo');
+        if ($redirectTo && $redirectTo == 'customUrl') {
+            $redirectUrl = ArrayHelper::get($formSettings, 'confirmation.customUrl');
+        } else if ($redirectTo) {
+            $redirectUrl = get_permalink($redirectTo);
+        } else {
+            $redirectUrl = wp_get_referer() ?: site_url();
+        }
+
+        // Get cancel URL
+        $cancelUrl = $submission->source_url;
+        if (!wp_http_validate_url($cancelUrl)) {
+            $cancelUrl = site_url($cancelUrl);
+        }
 
         $allowedPaymentMethods = [
             'alipay', 'apple_pay', 'bancontact', 'card', 'google_pay', 'ideal', 'paypal'
@@ -392,7 +476,10 @@ class PaddleProcessor extends BaseProcessor
             'client_token'            => PaddleSettings::getClientToken(),
             'frame_initial_height'    => '450',
             'frame_style'             => 'width: 100%; min-width: 312px; background-color: transparent; border: none;',
-            'allowed_payment_methods' => $allowedPaymentMethods
+            'allowed_payment_methods' => $allowedPaymentMethods,
+            'success_redirect'        => $redirectUrl,
+            'failure_redirect'        => $cancelUrl,
+            'redirect_delay'          => 1000
         ];
 
         wp_localize_script('ff_paddle_handler', 'ff_paddle_vars',
@@ -467,12 +554,12 @@ class PaddleProcessor extends BaseProcessor
                     'product_id'   => '',
                     'payment_item' => ''
                 ]
-            ],
-            'paddle_products'               => $products,
-            'paddle_prices'                 => $prices
+            ]
         ];
 
         $paymentSettings['settings'] = wp_parse_args($paymentSettings['settings'], $customSettings);
+        $paymentSettings['settings']['paddle_products'] = $products;
+        $paymentSettings['settings']['paddle_prices'] = $prices;
 
         return $paymentSettings;
     }
@@ -502,8 +589,178 @@ class PaddleProcessor extends BaseProcessor
         $this->changeTransactionStatus($transaction->id, $status);
         $this->recalculatePaidTotal();
         $returnData = $this->getReturnData();
+        $returnData['type'] = 'success';
         $this->setMetaData('is_form_action_fired', 'yes');
         return $returnData;
+    }
+
+    protected function handleCustomer($submission, $form)
+    {
+        $customerName = PaymentHelper::getCustomerName($submission, $this->form);
+        $customerEmail = PaymentHelper::getCustomerEmail($submission, $this->form);
+        $customerAddress = PaymentHelper::getCustomerAddress($submission);
+
+        // First create a customer
+        $customerData = [
+            'email' => $customerEmail,
+            'name'  => $customerName
+        ];
+
+        $customerResponse = (new API())->makeApiCall('customers', $customerData, $form->id, 'POST');
+        $customerId = null;
+
+        if (is_wp_error($customerResponse)) {
+            $errorData = $customerResponse->get_error_data();
+            $errorCode = $customerResponse->get_error_code();
+            $errorMessage = $customerResponse->get_error_message();
+
+            // Check if the error is "customer_already_exists"
+            if (
+                $errorData &&
+                isset($errorData['error']) &&
+                isset($errorData['error']['code']) &&
+                $errorData['error']['code'] === 'customer_already_exists'
+            ) {
+                // Customer already exists, find by email
+                $customerId = $this->findCustomerByEmail($customerEmail, $form, $submission);
+
+                if ($customerId) {
+                    do_action('fluentform/log_data', [
+                        'parent_source_id' => $form->id,
+                        'source_type'      => 'submission_item',
+                        'source_id'        => $submission->id,
+                        'component'        => 'Payment',
+                        'status'           => 'info',
+                        'title'            => __('Existing Customer Found', 'fluentformpro'),
+                        'description'      => __("Using existing customer with ID: {$customerId}", 'fluentformpro')
+                    ]);
+                } else {
+                    do_action('fluentform/log_data', [
+                        'parent_source_id' => $form->id,
+                        'source_type'      => 'submission_item',
+                        'source_id'        => $submission->id,
+                        'component'        => 'Payment',
+                        'status'           => 'failed',
+                        'title'            => __('Customer Lookup Failed', 'fluentformpro'),
+                        'description'      => __("Customer exists but couldn't be found by email", 'fluentformpro')
+                    ]);
+                }
+            } else {
+                // Other error occurred
+                do_action('fluentform/log_data', [
+                    'parent_source_id' => $form->id,
+                    'source_type'      => 'submission_item',
+                    'source_id'        => $submission->id,
+                    'component'        => 'Payment',
+                    'status'           => 'failed',
+                    'title'            => __('Skip Customer Creation', 'fluentformpro'),
+                    'description'      => __("Error Code: {$errorCode}. Reason: {$errorMessage}", 'fluentformpro')
+                ]);
+            }
+        } else {
+            if (isset($customerResponse['data']['id'])) {
+                $customerId = $customerResponse['data']['id'];
+
+                do_action('fluentform/log_data', [
+                    'parent_source_id' => $form->id,
+                    'source_type'      => 'submission_item',
+                    'source_id'        => $submission->id,
+                    'component'        => 'Payment',
+                    'status'           => 'info',
+                    'title'            => __('Customer Created', 'fluentformpro'),
+                    'description'      => __("Customer created with ID: {$customerId}", 'fluentformpro')
+                ]);
+            }
+        }
+
+        if ($customerAddress && $customerId && !empty($customerAddress['country'])) {
+            $this->handleCustomerAddress($customerId, $customerAddress, $form, $submission);
+        }
+
+        return $customerId;
+    }
+
+    protected function findCustomerByEmail($email, $form, $submission)
+    {
+        // Use the exact email parameter
+        $endpoint = 'customers?email=' . urlencode($email);
+        $response = (new API())->makeApiCall($endpoint, [], $form->id);
+
+        if (is_wp_error($response)) {
+            do_action('fluentform/log_data', [
+                'parent_source_id' => $form->id,
+                'source_type'      => 'submission_item',
+                'source_id'        => $submission->id,
+                'component'        => 'Payment',
+                'status'           => 'error',
+                'title'            => __('Customer Search Failed', 'fluentformpro'),
+                'description'      => $response->get_error_message()
+            ]);
+            return null;
+        }
+
+        if (!isset($response['data']) || empty($response['data'])) {
+            return null;
+        }
+
+        return ArrayHelper::get($response, 'data.0.id', '');
+    }
+    
+    protected function handleCustomerAddress($customerId, $customerAddress, $form, $submission)
+    {
+        $address = [];
+
+        // Paddle requires country code
+        if ($country = ArrayHelper::get($customerAddress, 'country')) {
+            $address['country_code'] = $country;
+        }
+        
+        if ($firstLine = ArrayHelper::get($customerAddress, 'address_line_1')) {
+            $address['first_line'] = $firstLine;
+        }
+
+        if ($secondLine = ArrayHelper::get($customerAddress, 'address_line_2')) {
+            $address['second_line'] = $secondLine;
+        }
+
+        if ($city = ArrayHelper::get($customerAddress, 'city')) {
+            $address['city'] = $city;
+        }
+
+        if ($state = ArrayHelper::get($customerAddress, 'state')) {
+            $address['region'] = $state;
+        }
+
+        if ($zip = ArrayHelper::get($customerAddress, 'zip')) {
+            $address['postal_code'] = $zip;
+        }
+        
+        $endpoint = 'customers/' . $customerId . '/addresses';
+        $customerAddressResponse = (new API())->makeApiCall($endpoint, $address, $form->id, 'POST');
+
+        if (!is_wp_error($customerAddressResponse) && isset($customerAddressResponse['data']['id'])) {
+            do_action('fluentform/log_data', [
+                'parent_source_id' => $form->id,
+                'source_type'      => 'submission_item',
+                'source_id'        => $submission->id,
+                'component'        => 'Payment',
+                'status'           => 'info',
+                'title'            => __('Customer Address Created', 'fluentformpro'),
+                'description'      => __("Customer address created for customer ID: {$customerId}", 'fluentformpro')
+            ]);
+            
+            return;
+        }
+
+        do_action('fluentform/log_data', [
+            'parent_source_id' => $form->id,
+            'source_type'      => 'submission_item',
+            'source_id'        => $submission->id,
+            'component'        => 'Payment',
+            'status'           => 'failed',
+            'title'            => __('Skip Customer Address Creation', 'fluentformpro'),
+            'description'      => __("Could not be able to create address for customer ID: {$customerId}", 'fluentformpro')
+        ]);
     }
 
     private function getProducts($formId)

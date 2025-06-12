@@ -100,7 +100,7 @@ class InventoryFieldsRenderer
         return $field;
     }
     
-    public function adjustSinglePaymentItem($field, $form, $stockLabel, $inventoryType, $quantityFieldName)
+    public function adjustSinglePaymentItem($field, $form, $stockLabel, $inventoryType, $quantityFieldName, $previousSubmissionData)
     {
         $itemName = Arr::get($field, 'settings.label');
         $parentName = Arr::get($field, 'attributes.name');
@@ -109,7 +109,7 @@ class InventoryFieldsRenderer
     
         if ($inventoryType == 'simple') {
             $availableQuantity = (int)Arr::get($field, 'settings.single_inventory_stock');
-            $usedQuantity = InventoryValidation::getPaymentItemSubmissionQuantity($form->id, $parentName, $itemName, $itemPrice);
+            $usedQuantity = Arr::get($previousSubmissionData, $parentName.'.total_entry', 0);
             $remaining = max($availableQuantity - $usedQuantity, 0);
         } else {
             $inventoryValidation = (new InventoryValidation([], $form));
@@ -161,7 +161,7 @@ class InventoryFieldsRenderer
         list($inputType, $showStock, $stockLabel, $hideChoice) = $this->validationMessages($field);
         
         if ($inputType == 'single') {
-            $field = $this->adjustSinglePaymentItem($field, $form, $stockLabel, $inventoryType, $quantityFieldName);
+            $field = $this->adjustSinglePaymentItem($field, $form, $stockLabel, $inventoryType, $quantityFieldName, $previousSubmissionData);
         } elseif ($inputType == 'radio' || $inputType == 'checkbox' || $inputType == 'select') {
             $attr = [
                 'formId'                 => $form->id,

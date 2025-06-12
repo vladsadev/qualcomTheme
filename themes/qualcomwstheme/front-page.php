@@ -51,65 +51,67 @@
     </section>
 
     <!--~~~~~~~~~~~~~~~SOLUCIONES ~~~~~~~~~~~~~~~-->
-    <section id="soluciones" class="bg-repeat py-10 text-slate-200" style="background-image:
-            url(<?= get_theme_file_uri( 'src/assets/images/bg-pcb.png' ) ?>)">
-        <h2
-                class="py-3 text-center font-rajdhani text-2xl font-bold lg:text-4xl"
-        >
-            Soluciones
-        </h2>
-        <div class="container space-y-4 lg:space-y-5">
-            <!-- First Tile -->
-            <div
-                    class="flex h-[21rem] flex-col items-center justify-center gap-4 bg-cover bg-top py-10 text-center lg:h-[24rem] lg:justify-start 2xl:h-[29rem]"
-                    style="background-image: url(<?= get_theme_file_uri( 'src/assets/images/bg-venta.png' ) ?>)"
-            >
-                <p
-                        class="text-shadow max-w-xl font-rajdhani text-4xl font-bold lg:text-5xl"
-                >
-                    Venta de equipos informáticos y accesorios
-                </p>
-                <p class="text-shadow max-w-2xl lg:text-lg">
-					<?= get_field( 'descripcion_venta_de_equipos' ) ?>
-                </p>
-                <a class="btn" href="<?= site_url( 'servicios' ) ?>">Conocer más</a>
-            </div>
+    <section id="soluciones" class="bg-repeat py-10 text-slate-200"
+             style="background-image: url(<?= get_theme_file_uri( 'src/assets/images/bg-pcb.png' ) ?>)">
+        <div class="container">
+            <h2 class="py-3 text-center font-rajdhani text-2xl font-bold lg:text-4xl">
+                Soluciones
+            </h2>
 
-            <!-- second and third tile -->
-            <div
-                    class="flex flex-col gap-4 text-center md:flex-row lg:gap-5 lg:text-left"
-            >
-                <!-- second tile -->
-                <div
-                        class="flex h-[21rem] flex-col items-center justify-center gap-4 bg-cover bg-top py-10 lg:h-[25rem] lg:w-full lg:items-start lg:justify-end lg:p-8 2xl:h-[30rem]"
-                        style="background-image: url(<?= get_theme_file_uri( 'src/assets/images/bg-mantenimiento.png' )
-						?>)"
-                >
-                    <p
-                            class="text-shadow font-rajdhani text-3xl font-bold lg:max-w-md lg:text-3xl"
-                    >
-                        Servicio de mantenimiento y repación de equipos
-                    </p>
-                    <p class="text-shadow lg:max-w-md">
-						<?= get_field( 'descripcion_mantenimiento_y_reparacion' ) ?>
-                    </p>
-                    <a class="btn" href="#">Conocer más</a>
-                </div>
+            <div class="space-y-4 lg:space-y-5">
+                <!-- Tarjeta Principal - Venta de Equipos -->
+                <article class="solution-card solution-card--primary"
+                         style="background-image: url(<?= get_theme_file_uri( 'src/assets/images/bg-venta.png' ) ?>)"
+                         aria-labelledby="venta-titulo">
+                    <div class="solution-card__content text-center">
+                        <h3 id="venta-titulo" class="solution-card__title">
+                            Venta de equipos informáticos y accesorios
+                        </h3>
+                        <p class="solution-card__description">
+							<?= get_field( 'descripcion_venta_de_equipos' ) ?>
+                        </p>
+                        <a class="btn mx-auto" href="<?= site_url( 'servicios' ) ?>" aria-label="Conocer más sobre venta de
+                        equipos">
+                            Conocer más
+                        </a>
+                    </div>
+                </article>
 
-                <!-- third tile -->
-                <div
-                        class="flex h-[21rem] flex-col items-center justify-center gap-4 bg-cover bg-top py-10 lg:h-[25rem] lg:w-full lg:items-start lg:justify-end lg:p-8 2xl:h-[30rem]"
-                        style="background-image: url(<?= get_theme_file_uri( 'src/assets/images/bg-soporte.png' ) ?>)"
-                >
-                    <p
-                            class="text-shadow font-rajdhani text-3xl font-bold lg:max-w-md lg:text-3xl"
-                    >
-                        Asesoramiento y Soporte técnico profesional
-                    </p>
-                    <p class="text-shadow lg:max-w-md">
-						<?= get_field( 'descripcion_soporte_tecnico' ) ?>
-                    </p>
-                    <a class="btn" href="#">Conocer más</a>
+                <!-- Tarjetas Secundarias -->
+                <div class="solution-grid">
+                    <!-- Mantenimiento -->
+                    <article class="solution-card solution-card--secondary"
+                             style="background-image: url(<?= get_theme_file_uri( 'src/assets/images/bg-mantenimiento.png' ) ?>)"
+                             aria-labelledby="mantenimiento-titulo">
+                        <div class="solution-card__content">
+                            <h3 id="mantenimiento-titulo" class="solution-card__title solution-card__title--secondary">
+                                Servicio de mantenimiento y reparación de equipos
+                            </h3>
+                            <p class="solution-card__description solution-card__description--secondary">
+								<?= get_field( 'descripcion_mantenimiento_y_reparacion' ) ?>
+                            </p>
+                            <a class="btn" href="#" aria-label="Conocer más sobre mantenimiento">
+                                Conocer más
+                            </a>
+                        </div>
+                    </article>
+
+                    <!-- Soporte Técnico -->
+                    <article class="solution-card solution-card--secondary"
+                             style="background-image: url(<?= get_theme_file_uri( 'src/assets/images/bg-soporte.png' ) ?>)"
+                             aria-labelledby="soporte-titulo">
+                        <div class="solution-card__content">
+                            <h3 id="soporte-titulo" class="solution-card__title solution-card__title--secondary">
+                                Asesoramiento y soporte técnico profesional
+                            </h3>
+                            <p class="solution-card__description solution-card__description--secondary">
+								<?= get_field( 'descripcion_soporte_tecnico' ) ?>
+                            </p>
+                            <a class="btn" href="#" aria-label="Conocer más sobre soporte técnico">
+                                Conocer más
+                            </a>
+                        </div>
+                    </article>
                 </div>
             </div>
         </div>
@@ -119,6 +121,7 @@
     <section id="productos" class="bg-white">
 		<?php get_template_part( 'template-parts/content', 'brands' ) ?>
     </section>
+
     <!--    Nuestros productos-->
     <section class="bg-slate-200 py-4 lg:py-8">
         <div class="relative mb-8 container">
@@ -177,6 +180,7 @@
     <section id="testimonios" class="bg-pcb bg-repeat py-4 md:py-16">
 		<?php get_template_part( 'template-parts/content', 'testimonios' ) ?>
     </section>
+
     <!--~~~~~~~~~~~~~~~ BLOG ~~~~~~~~~~~~~~~-->
     <section id="publicaciones" class="bg-white py-2">
         <div class="relative mb-8 container mt-8 md:mb-16 md:mt-12 ">

@@ -65,7 +65,7 @@
 <body class="ff_landing_page_body ff_landing_page_<?php echo $form_id; ?> <?php if($isEmbeded) { echo 'ff_landing_iframe'; } ?>">
 
 <div class="ff_landing_wrapper ff_landing_design_<?php echo $settings['design_style']; ?> ff_landing_layout_<?php echo $settings['layout']; ?>">
-    <div class="ff_landing_form_wrapper">
+    <div class="ff_landing_form_wrapper <?php echo isset($front_end_entry)?'front_end_entry_view':''; ?>">
         <?php if(isset($settings['form_shadow']) && is_array($settings['form_shadow'])):
             // check have shadow or not if have make shadow
             $shadow = array_map(function ($s) {

@@ -37,7 +37,6 @@ class ChatFieldController
         $isApiEnabled = $this->api->isApiEnabled();
 
         if ($isApiEnabled) {
-            add_filter('fluentform/all_editor_shortcodes', [$this, 'insertAllEditorShortcode'], 10, 1);
             add_filter('fluentform/all_forms_vars', function ($settings) {
                 $settings['has_gpt_feature'] = true;
                 return $settings;
@@ -71,6 +70,10 @@ class ChatFieldController
 
         add_filter('fluentform/form_class', [$this, 'beforeFormRenderCss'], 10, 2);
 
+        add_filter('fluentform/chat_gpt_waiting_message', [$this, 'setWaitingMessage'], 10, 2);
+
+        add_filter('fluentform/all_editor_shortcodes', [$this, 'insertAllEditorShortcode'], 10, 1);
+
 //        add_action('wp_ajax_fluentform_openai_chat_completion', [$this, 'chatCompletion'], 11, 0);
 
 //        add_action('wp_ajax_nopriv_fluentform_openai_chat_completion', [$this, 'chatCompletion'], 11, 0);
@@ -78,9 +81,34 @@ class ChatFieldController
 //        new ChatField();
     }
 
-    public function loadScripts()
+    public function setWaitingMessage($message, $form)
     {
-        $message = apply_filters('fluentform/chat_gpt_waiting_message', __('Please wait while getting the data from ChatGPT. Do not refresh or close the window', 'fluentformpro'));
+        $feeds = FormMeta::where('meta_key', $this->settingsKey)
+                         ->where('form_id', $form->id)
+                         ->get();
+
+        if (!$feeds) {
+            return $message;
+        }
+
+        foreach ($feeds as $feed) {
+            $value = json_decode($feed->value, true);
+            if (ArrayHelper::isTrue($value, 'enabled')) {
+                $waitingMessage = ArrayHelper::get($value, 'waiting_message');
+
+                if (!$waitingMessage) {
+                    return $message;
+                }
+
+                return $waitingMessage;
+            }
+        }
+
+        return $message;
+    }
+    public function loadScripts($form)
+    {
+        $message = apply_filters('fluentform/chat_gpt_waiting_message','', $form);
 
         wp_register_script(
             'fluentform-chat-field-script',
@@ -89,7 +117,7 @@ class ChatFieldController
             FLUENTFORMPRO_VERSION,
             true
         );
-
+        
         wp_localize_script(
             'fluentform-chat-field-script',
             'fluentform_chat',
@@ -251,15 +279,17 @@ class ChatFieldController
     public function getIntegrationDefaults($settings, $formId)
     {
         return [
-            'name'         => '',
-            'role'         => '',
-            'prompt_field' => '',
-            'conditionals' => [
+            'name'            => '',
+            'role'            => '',
+            'prompt_field'    => '',
+            'waiting_message' => '',
+            'chat_loader'     => '',
+            'conditionals'    => [
                 'conditions' => [],
                 'status'     => false,
                 'type'       => 'all'
             ],
-            'enabled'      => true
+            'enabled'         => true
         ];
     }
 
@@ -291,6 +321,15 @@ class ChatFieldController
                     'label'       => __('Write Query', 'fluentformpro'),
                     'placeholder' => __('Write your query to get OpenAI ChatGPT generated result', 'fluentformpro'),
                     'tips'        => __('Write your query to get OpenAI ChatGPT generated result', 'fluentformpro'),
+                    'required'    => true,
+                    'component'   => 'value_textarea',
+                ],
+                [
+                    'key'         => 'waiting_message',
+                    'label'       => __('Waiting Message with Loader', 'fluentformpro'),
+                    'placeholder' => __('Type waiting message or leave it empty skip the loader', 'fluentformpro'),
+                    'tips'        => __('Write your desired waiting message while getting OpenAI ChatGPT generated result, it will show a loader Icon', 'fluentformpro'),
+                    'value'       => __('Please wait while getting the data from ChatGPT. Do not refresh or close the window', 'fluentformpro'),
                     'required'    => true,
                     'component'   => 'value_textarea',
                 ],
@@ -466,13 +505,18 @@ class ChatFieldController
             "content" => $content
         ];
 
+
         $result = $this->api->makeRequest($args);
 
         if (is_wp_error($result)) {
             return '';
         }
 
-        return trim(ArrayHelper::get($result, 'choices.0.message.content'), '"');
+        $content = trim(ArrayHelper::get($result, 'choices.0.message.content'), '"');
+        $content = fluentform_sanitize_html($content);
+
+        // Extract code from response if html code blocks exist
+        return $this->api->maybeExtractCodeFromResponse($content);
     }
 
     public function beforeFormRenderCss($class, $form)
@@ -483,7 +527,7 @@ class ChatFieldController
 
         if ($hasChatGpt) {
             $class .= ' ff-has-chat-gpt';
-            $this->loadScripts();
+            $this->loadScripts($form);
         }
 
         return $class;

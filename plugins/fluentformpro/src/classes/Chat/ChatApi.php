@@ -21,6 +21,29 @@ class ChatApi
         $this->key = $key;
     }
 
+    /**
+     * Maybe Extract code from a response that might contain markdown code blocks
+     *
+     * @param string $content The content to parse
+     * @return string The extracted code or original content if no code block found
+     */
+    public function maybeExtractCodeFromResponse($content)
+    {
+        // Check if the content contains HTML code blocks
+        if (preg_match('/```html\s*(.+?)\s*```/s', $content, $matches)) {
+            // Return only the code part
+            return trim($matches[1]);
+        }
+
+        // Also check for other code blocks
+        if (preg_match('/```\w*\s*(.+?)\s*```/s', $content, $matches)) {
+            return trim($matches[1]);
+        }
+
+        return $content;
+    }
+
+ 
 
     public function makeRequest($args = [], $token = '')
     {

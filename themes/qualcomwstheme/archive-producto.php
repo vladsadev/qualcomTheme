@@ -1,7 +1,7 @@
 <?php get_header() ?>
     <!-- Banner -->
 <?php getPageBanner( [
-    'title' => "Nuestros Productos y Servicios"
+	'title' => "Nuestros Productos y Servicios"
 ] ); ?>
 
     <main class="bg-white text-black">
@@ -21,9 +21,9 @@
                 </div>
                 <!--  Productos-->
                 <ul class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 lg:gap-6">
-					<?php while ( have_posts() ): the_post(); ?>
-                        <!-- Dr. X -->
-                        <li class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover">
+		            <?php while ( have_posts() ): the_post(); ?>
+                        <!-- Producto X -->
+                        <li class="bg-white rounded-2xl shadow-lg card-hover h-96 flex flex-col">
                             <div class="aspect-w-16 aspect-h-12 overflow-hidden">
                                 <a href="<?= get_the_permalink() ?>">
                                     <img src="<?= get_the_post_thumbnail_url( size: 'imgProducto' ) ?>"
@@ -31,22 +31,22 @@
                                          class="w-full h-64 object-cover transition-transform duration-500 hover:scale-110">
                                 </a>
                             </div>
-                            <div class="py-6 px-4">
-                                <h3 class="text-xl font-bold text-blue-dark mb-2"><?php the_title() ?></h3>
-                                <p class="text-red-light font-semibold mb-3"><?= get_field( 'especialidad' ) ?></p>
-                                <a href="<?= get_the_permalink() ?>" class="text-red-lighter cursor-pointer hover:font-semibold
-                            md:text-lg
-                            hover:text-red-light
-                            transition-colors
-                            duration-200">
-                                    Ver perfil
+                            <div class="py-6 px-4 flex flex-col flex-1 justify-between">
+                                <div>
+                                    <h3 class="text-xl font-bold text-blue-dark mb-2"><?php the_title() ?></h3>
+                                    <p class="font-semibold text-primary_yellow">
+                                        Bs. <?= get_field( 'precio_del_producto' ) ?></p>
+                                </div>
+                                <a href="<?= get_the_permalink() ?>" class="text-main_blue font-semibold
+            cursor-pointer
+            md:text-lg hover:text-primary_yellow transition-colors duration-200 mt-4">
+                                    Detalles del Producto
                                 </a>
                             </div>
                         </li>
-
-					<?php endwhile; ?>
-
+		            <?php endwhile; ?>
                 </ul>
+
             </div>
         </section>
 

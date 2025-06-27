@@ -31,7 +31,3 @@ function themeLoadAssets() {
 	) );
 }
 
-// ===========================
-// Personalización de la página de login
-// ===========================
-

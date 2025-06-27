@@ -26,6 +26,13 @@ function getPageBanner( $args = [] ) {
                 <p class="my-2 text-lg lg:pr-[19rem] md:text-xl xl:text-2xl bg-white">
 					<?php the_archive_description() ?? ''; ?>
                 </p>
+			<?php elseif ( is_tax( 'marca-producto' ) ) : ?>
+                <h3 class="text-4xl md:text-5xl xl:text-6xl">
+					<?php the_archive_title(); ?>
+                </h3>
+                <p class="my-2 text-lg lg:pr-[19rem] md:text-xl xl:text-2xl bg-white">
+					<?php the_archive_description() ?? ''; ?>
+                </p>
 			<?php else: ?>
                 <h3 class="text-4xl md:text-5xl xl:text-6xl">
 					<?= $args['title'] ?? get_field( 'titulo_del_banner' ) ?>

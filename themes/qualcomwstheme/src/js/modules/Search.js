@@ -166,8 +166,6 @@ class Search {
         this.resultsDiv.innerHTML = 'ok';
 
     }
-
-
 }
 
 export default Search;

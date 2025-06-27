@@ -8,11 +8,11 @@
     >
         <!-- item 1: sobre nosotros -->
         <div class="space-y-4 xl:col-span-3">
-            <div class="mx-auto w-11/12 space-y-4">
-                <p class="mb-5 text-xl font-bold">Sobre Nosotros</p>
-                <p class="">
-                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Veniam!
-                </p>
+            <div class="mx-auto w-full space-y-4">
+                <h3 class="mb-5 text-xl font-bold font-inter">Sobre Nosotros</h3>
+                <p class="text-sm md:text-base text-justify">
+                    Somos Qualcom, un equipo apasionado por la tecnología y comprometido con ofrecer soluciones tecnológicas
+                    de alta calidad a empresas que buscan la excelencia </p>
                 <img
                         class="inline-block w-36"
                         src="<?php get_theme_file_uri( 'src/assets/images/logo-dark.png' ) ?>"
@@ -37,9 +37,7 @@
                 <p class="mb-5 text-xl font-bold">Servicio al cliente</p>
                 <div class="flex flex-col gap-2">
                     <a href="#" class="nav-link-footer">Centro de asistencia</a>
-                    <a href="#" class="nav-link-footer">Rastrear un pedido</a>
                     <a href="#" class="nav-link-footer">Política de devoluciones</a>
-                    <a href="#" class="nav-link-footer">Sugerencias</a>
                 </div>
             </div>
         </div>
@@ -47,22 +45,20 @@
         <div class="xl:col-span-2">
             <p class="mb-5 text-xl font-bold">Accesos directos</p>
             <div class="flex flex-col gap-2">
-                <a class="nav-link-footer" href="contacto.html"></a>
-                <a class="nav-link-footer" href="#">Sobre Nosotros</a>
-                <a class="nav-link-footer" href="Productos">Productos</a>
-                <a class="nav-link-footer" href="contacto.html">Blog/noticias</a>
-                <a class="nav-link-footer" href="Productos">Contacto</a>
+                <a class="nav-link-footer" href="<?= site_url('sobre-nosotros')?>">Sobre Nosotros</a>
+                <a class="nav-link-footer" href="<?= site_url('productos')?>">Productos</a>
+                <a class="nav-link-footer" href="<?= site_url('blog')?>">Blog/noticias</a>
+                <a class="nav-link-footer" href="<?= site_url('contacto')?>">Contacto</a>
             </div>
         </div>
         <!-- item 5: nuestras marcas -->
         <div class="xl:col-span-2">
             <p class="mb-5 text-xl font-bold">Nuestras Marcas</p>
             <div class="flex flex-col gap-2">
-                <a class="nav-link-footer" href="#"></a>
-                <a class="nav-link-footer" href="#">HP</a>
-                <a class="nav-link-footer" href="#">Lenovo</a>
-                <a class="nav-link-footer" href="#">Asus</a>
-                <a class="nav-link-footer" href="#">Dell</a>
+                <a class="nav-link-footer" href="/nuestras-marcas/hp">HP</a>
+                <a class="nav-link-footer" href="/nuestras-marcas/dell">Dell</a>
+                <a class="nav-link-footer" href="/nuestras-marcas/asus">Asus</a>
+                <a class="nav-link-footer" href="/nuestras-marcas/havit">Havit</a>
             </div>
         </div>
     </div>

@@ -4,7 +4,7 @@
 @import url("css/login.css");
 @import url("css/productos-archive.css");
 @import url("css/soluciones.css");
-
+@import url("css/search-spinner.css");
 
 @tailwind base;
 @tailwind components;

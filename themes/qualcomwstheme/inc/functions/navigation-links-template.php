@@ -37,12 +37,12 @@ function navigationTemplate( $args = [] ): void {
     </div>
 
     <!-- Top right icons DESKTOP -->
-    <div class="flex cursor-pointer items-center gap-5 text-xl sm:text-2xl lg:self-center">
+    <button class="flex cursor-pointer items-center gap-5 text-xl sm:text-2xl lg:self-center">
         <i class="ri-search-line js-search-trigger hover:text-primary_yellow"></i>
 
 		<?php foreach ( $user_links as $link ): ?>
             <a class="<?= $link['class'] ?> hidden lg:block" href="<?= $link['url'] ?>"><?= $link['title'] ?></a>
 		<?php endforeach; ?>
-    </div>
+    </button>
 
 <?php } ?>

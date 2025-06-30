@@ -1,0 +1,185 @@
+/* ===========================
+   SPINNER LOADER PARA SEARCH
+   =========================== */
+
+.spinner-loader {
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: #fbbf24; /* primary_yellow */
+    animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Spinner más grande para estados de carga principales */
+.spinner-loader--lg {
+    width: 32px;
+    height: 32px;
+    border-width: 4px;
+}
+
+/* ===========================
+   MEJORAS PARA SEARCH OVERLAY
+   =========================== */
+
+/* Transiciones suaves para los resultados */
+#search-overlay__results {
+    transition: all 0.3s ease-in-out;
+}
+
+/* Estilos para los resultados de búsqueda */
+.search-result-item {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 0.75rem;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.search-result-item:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(251, 191, 36, 0.5); /* primary_yellow con opacity */
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.search-result-item h4 {
+    color: white;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+    transition: color 0.3s ease;
+}
+
+.search-result-item:hover h4 {
+    color: #fbbf24; /* primary_yellow */
+}
+
+.search-result-meta {
+    color: rgb(203, 213, 225); /* slate-300 */
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.025em;
+    margin-bottom: 0.5rem;
+}
+
+.search-result-excerpt {
+    color: rgb(148, 163, 184); /* slate-400 */
+    font-size: 0.875rem;
+    line-height: 1.5;
+}
+
+/* Resaltado de términos de búsqueda */
+.search-highlight {
+    background-color: #fbbf24; /* primary_yellow */
+    color: #000;
+    padding: 0.125rem 0.25rem;
+    border-radius: 0.25rem;
+    font-weight: 600;
+}
+
+/* Estados de mensaje */
+.search-message {
+    text-align: center;
+    padding: 2rem 1rem;
+    color: rgb(203, 213, 225); /* slate-300 */
+}
+
+.search-message--empty {
+    font-size: 1.125rem;
+}
+
+.search-message--error {
+    color: #ef4444; /* red-500 */
+}
+
+.search-message--loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+}
+
+/* Animación de entrada para los resultados */
+.search-results-enter {
+    opacity: 0;
+    transform: translateY(10px);
+    animation: slideInResults 0.3s ease-out forwards;
+}
+
+@keyframes slideInResults {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ===========================
+   RESPONSIVE IMPROVEMENTS
+   =========================== */
+
+@media (max-width: 768px) {
+    .search-result-item {
+        padding: 0.75rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .search-result-item h4 {
+        font-size: 0.95rem;
+    }
+
+    .search-result-excerpt {
+        font-size: 0.8rem;
+    }
+}
+
+/* ===========================
+   ACCESSIBILITY IMPROVEMENTS
+   =========================== */
+
+.search-result-item:focus {
+    outline: 2px solid #fbbf24; /* primary_yellow */
+    outline-offset: 2px;
+}
+
+.search-result-item:focus:not(:focus-visible) {
+    outline: none;
+}
+
+/* Mejora el contraste para usuarios con discapacidad visual */
+@media (prefers-contrast: high) {
+    .search-result-item {
+        background: rgba(255, 255, 255, 0.15);
+        border-color: rgba(255, 255, 255, 0.3);
+    }
+
+    .search-result-item:hover {
+        background: rgba(255, 255, 255, 0.25);
+    }
+}
+
+/* Respeta las preferencias de movimiento reducido */
+@media (prefers-reduced-motion: reduce) {
+    .spinner-loader {
+        animation: none;
+    }
+
+    .search-result-item {
+        transition: none;
+    }
+
+    .search-results-enter {
+        animation: none;
+        opacity: 1;
+        transform: none;
+    }
+}

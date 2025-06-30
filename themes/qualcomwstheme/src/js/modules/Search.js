@@ -15,9 +15,15 @@ class Search {
         this.isSpinnerVisible = false;
         this.previousValue;
 
-
         // Estado del overlay
         this.isOpen = false;
+
+        // Configuración de la búsqueda
+        this.searchConfig = {
+            minCharacters: 2,
+            delay: 800,
+            maxResults: 8
+        };
 
         // Inicializar la clase
         this.init();
@@ -62,9 +68,8 @@ class Search {
         // Event listener para cerrar al hacer clic fuera del contenido
         this.searchOverlay.addEventListener('click', this.handleOverlayClick.bind(this));
 
-        //Event listener para manejar la logica de escritura en el input
-        this.searchInput.addEventListener('input', this.searchInputLogic.bind(this))
-
+        // Event listener para manejar la lógica de escritura en el input
+        this.searchInput.addEventListener('input', this.searchInputLogic.bind(this));
     }
 
     /**
@@ -92,6 +97,9 @@ class Search {
                 this.searchInput.focus();
             }
         }, 300);
+
+        // Limpiar resultados anteriores
+        this.clearResults();
     }
 
     /**
@@ -107,6 +115,12 @@ class Search {
 
         // Actualizar estado
         this.isOpen = false;
+
+        // Limpiar input y resultados
+        setTimeout(() => {
+            this.searchInput.value = '';
+            this.clearResults();
+        }, 300);
     }
 
     /**
@@ -142,29 +156,184 @@ class Search {
         }
     }
 
-    // Método para recibir los datos para la búsqueda
+    /**
+     * Maneja la lógica de entrada del usuario en el campo de búsqueda
+     * @param {Event} e - Evento de input
+     */
     searchInputLogic(e) {
+        const inputValue = this.searchInput.value.trim();
 
-        let inputValue = this.searchInput.value.trim();
-        if (inputValue != 0) {
-            clearTimeout(this.typingTimer); // garantizamos que el temporazador contenga el tiempo deseado
-            if (!this.isSpinnerVisible) {
-                this.resultsDiv.innerHTML = `<div class="spinner-loader"></div>`;
-                this.isSpinnerVisible = true;
-            }
-            this.typingTimer = setTimeout(this.getResults.bind(this), 1000);
+        // Limpiar timer anterior
+        clearTimeout(this.typingTimer);
+
+        // Si el input está vacío, limpiar resultados
+        if (inputValue.length === 0) {
+            this.clearResults();
+            return;
         }
 
+        // Si no cumple el mínimo de caracteres, no buscar
+        if (inputValue.length < this.searchConfig.minCharacters) {
+            this.showMessage(`Escribe al menos ${this.searchConfig.minCharacters} caracteres para buscar...`);
+            return;
+        }
 
-        this.previousValue = this.searchInput.value;
+        // Si el valor no cambió, no hacer nueva búsqueda
+        if (inputValue === this.previousValue) {
+            return;
+        }
 
+        // Mostrar spinner si no está visible
+        if (!this.isSpinnerVisible) {
+            this.showSpinner();
+        }
+
+        // Configurar nuevo timer para la búsqueda
+        this.typingTimer = setTimeout(() => {
+            this.getResults(inputValue);
+        }, this.searchConfig.delay);
+
+        this.previousValue = inputValue;
     }
 
-    //Método que muestra los resultados
-    getResults() {
-        this.isSpinnerVisible = false;
-        this.resultsDiv.innerHTML = 'ok';
+    /**
+     * Realiza la búsqueda y obtiene los resultados
+     * @param {string} searchTerm - Término de búsqueda
+     */
+    async getResults(searchTerm) {
+        try {
+            // Construir URL de la API de WordPress
+            const searchUrl = `${window.location.origin}/wp-json/wp/v2/search?search=${encodeURIComponent(searchTerm)}&per_page=${this.searchConfig.maxResults}`;
 
+            // Realizar petición
+            const response = await fetch(searchUrl);
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            const results = await response.json();
+
+            // Ocultar spinner
+            this.hideSpinner();
+
+            // Mostrar resultados
+            this.displayResults(results, searchTerm);
+
+        } catch (error) {
+            console.error('Error en la búsqueda:', error);
+            this.hideSpinner();
+            this.showMessage('Error al realizar la búsqueda. Por favor, intenta de nuevo.');
+        }
+    }
+
+    /**
+     * Muestra los resultados de la búsqueda
+     * @param {Array} results - Resultados de la búsqueda
+     * @param {string} searchTerm - Término buscado
+     */
+    displayResults(results, searchTerm) {
+        if (results.length === 0) {
+            this.showMessage(`No se encontraron resultados para "${searchTerm}"`);
+            return;
+        }
+
+        let html = `
+            <div class="mb-4">
+                <h3 class="text-white text-lg font-semibold">
+                    ${results.length} resultado${results.length !== 1 ? 's' : ''} para "${searchTerm}"
+                </h3>
+            </div>
+            <div class="space-y-4">
+        `;
+
+        results.forEach(result => {
+            html += `
+                <div class="bg-white/10 backdrop-blur-sm rounded-lg p-4 hover:bg-white/20 transition-colors duration-200">
+                    <a href="${result.url}" class="block group">
+                        <h4 class="text-white font-medium group-hover:text-primary_yellow transition-colors">
+                            ${this.highlightSearchTerm(result.title, searchTerm)}
+                        </h4>
+                        <p class="text-slate-300 text-sm mt-1">
+                            ${result.type === 'post' ? 'Artículo' : 'Página'} 
+                        </p>
+                        ${result.excerpt ? `
+                            <p class="text-slate-400 text-sm mt-2">
+                                ${this.highlightSearchTerm(this.stripHtml(result.excerpt), searchTerm)}
+                            </p>
+                        ` : ''}
+                    </a>
+                </div>
+            `;
+        });
+
+        html += `</div>`;
+
+        this.resultsDiv.innerHTML = html;
+    }
+
+    /**
+     * Resalta el término de búsqueda en el texto
+     * @param {string} text - Texto donde resaltar
+     * @param {string} searchTerm - Término a resaltar
+     * @return {string} - Texto con el término resaltado
+     */
+    highlightSearchTerm(text, searchTerm) {
+        if (!text || !searchTerm) return text;
+
+        const regex = new RegExp(`(${searchTerm})`, 'gi');
+        return text.replace(regex, '<mark class="bg-primary_yellow text-black px-1 rounded">$1</mark>');
+    }
+
+    /**
+     * Elimina etiquetas HTML del texto
+     * @param {string} html - Texto con HTML
+     * @return {string} - Texto sin HTML
+     */
+    stripHtml(html) {
+        const tmp = document.createElement('div');
+        tmp.innerHTML = html;
+        return tmp.textContent || tmp.innerText || '';
+    }
+
+    /**
+     * Muestra el spinner de carga
+     */
+    showSpinner() {
+        this.resultsDiv.innerHTML = `
+            <div class="flex justify-center items-center py-8">
+                <div class="spinner-loader"></div>
+                <span class="text-white ml-3">Buscando...</span>
+            </div>
+        `;
+        this.isSpinnerVisible = true;
+    }
+
+    /**
+     * Oculta el spinner de carga
+     */
+    hideSpinner() {
+        this.isSpinnerVisible = false;
+    }
+
+    /**
+     * Muestra un mensaje en el área de resultados
+     * @param {string} message - Mensaje a mostrar
+     */
+    showMessage(message) {
+        this.resultsDiv.innerHTML = `
+            <div class="text-center py-8">
+                <p class="text-slate-300">${message}</p>
+            </div>
+        `;
+    }
+
+    /**
+     * Limpia el área de resultados
+     */
+    clearResults() {
+        this.resultsDiv.innerHTML = '';
+        this.isSpinnerVisible = false;
     }
 }
 

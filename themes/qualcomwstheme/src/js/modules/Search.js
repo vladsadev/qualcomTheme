@@ -21,7 +21,7 @@ class Search {
         // Configuración de la búsqueda
         this.searchConfig = {
             minCharacters: 2,
-            delay: 800,
+            delay: 500,
             maxResults: 8
         };
 
@@ -96,7 +96,7 @@ class Search {
             if (this.searchInput) {
                 this.searchInput.focus();
             }
-        }, 300);
+        }, 350);
 
         // Limpiar resultados anteriores
         this.clearResults();
@@ -203,10 +203,11 @@ class Search {
     async getResults(searchTerm) {
         try {
             // Construir URL de la API de WordPress
-            const searchUrl = `${window.location.origin}/wp-json/wp/v2/search?search=${encodeURIComponent(searchTerm)}&per_page=${this.searchConfig.maxResults}`;
-
+             const searchUrl = `${qData.root_url}/wp-json/wp/v2/search?search=${encodeURIComponent(searchTerm)}&per_page=${this.searchConfig.maxResults}`;
             // Realizar petición
             const response = await fetch(searchUrl);
+
+            console.log(response);
 
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
@@ -249,12 +250,12 @@ class Search {
 
         results.forEach(result => {
             html += `
-                <div class="bg-white/10 backdrop-blur-sm rounded-lg p-4 hover:bg-white/20 transition-colors duration-200">
+                <div class="bg-white/10 backdrop-blur-sm rounded-lg p-2 hover:bg-white/20 transition-colors duration-200">
                     <a href="${result.url}" class="block group">
                         <h4 class="text-white font-medium group-hover:text-primary_yellow transition-colors">
                             ${this.highlightSearchTerm(result.title, searchTerm)}
                         </h4>
-                        <p class="text-slate-300 text-sm mt-1">
+                        <p class="text-slate-300 text-sm mt-0 hidden">
                             ${result.type === 'post' ? 'Artículo' : 'Página'} 
                         </p>
                         ${result.excerpt ? `

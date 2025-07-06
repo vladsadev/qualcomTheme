@@ -24,6 +24,7 @@ module.exports = {
                 main_blue: "#002A59",
                 mid_blue: "#003B7C",
                 dark_blue: "#00345C",
+                light_blue: "#00478C",
                 primary_yellow: "#F7941E",
             },
             fontFamily: {

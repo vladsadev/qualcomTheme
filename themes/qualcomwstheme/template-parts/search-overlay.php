@@ -2,8 +2,8 @@
 <div id="search-overlay" class="fixed inset-0 bg-dark_blue bg-opacity-95 z-50 flex flex-col justify-center
     items-center transform transition-all scale-0 opacity-0 duration-300">
     <!-- Contenedor principal -->
-    <div class="fixed top-[20%] w-full">
-        <div class="container relative mx-auto px-4 md:px-8 py-8 max-w-4xl">
+    <div class="fixed top-[2.5%] w-full">
+        <div class="container relative mx-auto px-4 md:px-8 pt-8 pb-4 max-w-4xl">
             <!-- Cabecera con logo y botón de cierre -->
             <div class="flex justify-between items-center mb-8">
                 <a href="<?= site_url( '/' ) ?>" class="flex items-center">
@@ -23,8 +23,8 @@
             </div>
 
             <!-- Formulario de búsqueda -->
-            <div class="text-center mb-10">
-                <h2 class="text-white text-2xl md:text-4xl mb-6 font-light">¿Qué estás buscando?</h2>
+            <div class="text-center mb-2 lg:mb-4">
+                <h2 class="text-white text-2xl md:text-4xl mb-3 2xl:mb-5 font-light">¿Qué estás buscando?</h2>
                 <form role="search" method="get" class="search-form" action="<?= esc_url( home_url( '/' ) ) ?>">
                     <div class="relative">
                         <input
@@ -48,24 +48,30 @@
                 <h3 class="text-white text-xl mb-4">Búsquedas populares</h3>
                 <div class="flex flex-wrap justify-center gap-3">
                     <a href="<?= site_url( '/?s=nuestras-marcas' ) ?>"
-                       class="bg-blue-800 hover:bg-blue-700 text-white px-4 py-2 rounded-full transition
+                       class="bg-primary_yellow hover:bg-light_blue text-white px-4 py-2
+                       rounded-full
+                       transition
                        duration-300">Nuestras Marcas</a>
                     <a href="<?= site_url( '/?s=productos' ) ?>"
-                       class="bg-blue-800 hover:bg-blue-700 text-white px-4 py-2 rounded-full transition duration-300">Productos</a>
+                       class="bg-primary_yellow hover:bg-light_blue text-white px-4 py-2 rounded-full transition
+                       duration-300">Productos</a>
                     <a href="<?= site_url( '/?s=soporte' ) ?>"
-                       class="bg-blue-800 hover:bg-blue-700 text-white px-4 py-2 rounded-full transition duration-300">Soporte
+                       class="bg-primary_yellow hover:bg-light_blue text-white px-4 py-2 rounded-full transition
+                       duration-300">Soporte
                         técnico</a>
                     <a href="<?= site_url( '/?s=impresoras' ) ?>"
-                       class="bg-blue-800 hover:bg-blue-700 text-white px-4 py-2 rounded-full transition duration-300">Impresoras</a>
+                       class="bg-primary_yellow hover:bg-light_blue text-white px-4 py-2 rounded-full transition
+                       duration-300">Impresoras</a>
                     <a href="<?= site_url( '/?s=computadoras' ) ?>"
-                       class="bg-blue-800 hover:bg-blue-700 text-white px-4 py-2 rounded-full transition duration-300">Computadoras</a>
+                       class="bbg-primary_yellow hover:bg-light_blue text-white px-4 py-2 rounded-full transition
+                       duration-300">Computadoras</a>
                 </div>
             </div>
         </div>
 
         <!-- Contenedor de resultados de búsqueda -->
         <div id="search-overlay__results" class="text-white flex flex-col justify-center container max-w-5xl
-            min-h-10 mt-4 md:mt-8 mx-auto px-4 md:px-8">
+            min-h-10 mt-2 md:mt-4 mx-auto px-4 md:px-8">
             <!-- Los resultados de búsqueda aparecerán aquí dinámicamente -->
         </div>
     </div>

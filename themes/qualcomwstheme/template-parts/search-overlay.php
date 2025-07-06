@@ -20,7 +20,6 @@
                         <i class="ri-close-line"></i>
                     </button>
                 </div>
-
             </div>
 
             <!-- Formulario de búsqueda -->
@@ -48,8 +47,9 @@
             <div class="text-center">
                 <h3 class="text-white text-xl mb-4">Búsquedas populares</h3>
                 <div class="flex flex-wrap justify-center gap-3">
-                    <a href="<?= site_url( '/?s=servicios' ) ?>"
-                       class="bg-blue-800 hover:bg-blue-700 text-white px-4 py-2 rounded-full transition duration-300">Servicios</a>
+                    <a href="<?= site_url( '/?s=nuestras-marcas' ) ?>"
+                       class="bg-blue-800 hover:bg-blue-700 text-white px-4 py-2 rounded-full transition
+                       duration-300">Nuestras Marcas</a>
                     <a href="<?= site_url( '/?s=productos' ) ?>"
                        class="bg-blue-800 hover:bg-blue-700 text-white px-4 py-2 rounded-full transition duration-300">Productos</a>
                     <a href="<?= site_url( '/?s=soporte' ) ?>"
@@ -63,13 +63,10 @@
             </div>
         </div>
 
+        <!-- Contenedor de resultados de búsqueda -->
         <div id="search-overlay__results" class="text-white flex flex-col justify-center container max-w-5xl
-            min-h-10 bg-slate-300/20 mt-4 md:mt-8">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores autem
-            corporis
-            deleniti dicta
-            doloremque dolorum ea eius exercitationem harum, inventore ipsam itaque molestiae natus nihil numquam
-            praesentium quis quod voluptatem.
+            min-h-10 mt-4 md:mt-8 mx-auto px-4 md:px-8">
+            <!-- Los resultados de búsqueda aparecerán aquí dinámicamente -->
         </div>
     </div>
 </div>

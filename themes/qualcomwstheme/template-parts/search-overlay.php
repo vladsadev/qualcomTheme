@@ -47,24 +47,21 @@
             <div class="text-center">
                 <h3 class="text-white text-xl mb-4">Búsquedas populares</h3>
                 <div class="flex flex-wrap justify-center gap-3">
-                    <a href="<?= site_url( '/?s=nuestras-marcas' ) ?>"
+                    <a href="<?= site_url( '/nuestras-marcas' ) ?>"
                        class="bg-primary_yellow hover:bg-light_blue text-white px-4 py-2
                        rounded-full
                        transition
                        duration-300">Nuestras Marcas</a>
-                    <a href="<?= site_url( '/?s=productos' ) ?>"
+                    <a href="<?= site_url( '/productos' ) ?>"
                        class="bg-primary_yellow hover:bg-light_blue text-white px-4 py-2 rounded-full transition
                        duration-300">Productos</a>
-                    <a href="<?= site_url( '/?s=soporte' ) ?>"
+                    <a href="<?= site_url( '/s=soporte' ) ?>"
                        class="bg-primary_yellow hover:bg-light_blue text-white px-4 py-2 rounded-full transition
                        duration-300">Soporte
                         técnico</a>
-                    <a href="<?= site_url( '/?s=impresoras' ) ?>"
+                    <a href="<?= site_url( '/contacto' ) ?>"
                        class="bg-primary_yellow hover:bg-light_blue text-white px-4 py-2 rounded-full transition
-                       duration-300">Impresoras</a>
-                    <a href="<?= site_url( '/?s=computadoras' ) ?>"
-                       class="bbg-primary_yellow hover:bg-light_blue text-white px-4 py-2 rounded-full transition
-                       duration-300">Computadoras</a>
+                       duration-300">Contacto</a>
                 </div>
             </div>
         </div>
